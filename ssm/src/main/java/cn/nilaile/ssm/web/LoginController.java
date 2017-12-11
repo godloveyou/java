@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.code.kaptcha.Constants;
+
 import cn.nilaile.ssm.dto.BaseResult;
 import cn.nilaile.ssm.entity.User;
 import cn.nilaile.ssm.enums.ResultEnum;
@@ -20,7 +22,7 @@ import cn.nilaile.ssm.service.IUserService;
 import cn.nilaile.ssm.util.Md5SaltUtil;
 
 @Controller
-@RequestMapping("/boss")
+@RequestMapping("/login")
 public class LoginController {
 
 	@Autowired
@@ -29,8 +31,16 @@ public class LoginController {
 	@RequestMapping(path = "/doLogin", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public BaseResult<Object> login(@RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password,HttpSession session) {
+			@RequestParam(value = "password") String password,@RequestParam(value="vcode") String vcode, HttpSession session) {
 
+		if(StringUtils.isBlank(vcode)){
+			return new BaseResult<Object>(false, "验证码不能为空");
+		}
+		
+		if(!vcode.equalsIgnoreCase(session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())){
+			return new BaseResult<Object>(false, "验证码错误");
+		}
+		
 		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
 			return new BaseResult<Object>(false, "用户名或密码为空");
 		}

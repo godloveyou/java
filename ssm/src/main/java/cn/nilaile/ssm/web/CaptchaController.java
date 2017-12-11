@@ -47,7 +47,7 @@ public class CaptchaController {
         } finally {  
             out.close();  
         }
-               System.out.println("Captchca:"+request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
+        System.out.println("Captchca:"+request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
         return null;  
     }  
 

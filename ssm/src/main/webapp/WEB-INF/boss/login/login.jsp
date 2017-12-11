@@ -20,6 +20,7 @@
 	<div class="video_mask"></div>
 	<div class="login">
 	    <h1>管理登录</h1>
+	    <input type="hidden" id="projectPath" value="<%=request.getContextPath()%>">
 	    <form class="layui-form">
 	    	<div class="layui-form-item">
 				<input class="layui-input" name="username" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
@@ -29,12 +30,12 @@
 		    </div>
 		    <div class="layui-form-item form_code">
 				<input class="layui-input" name="code" placeholder="验证码" lay-verify="required" type="text" autocomplete="off">
-				<div class="code"><img src="<%=request.getContextPath()%>/resource/admin/images/code.jpg" width="116" height="36"></div>
+				<div class="code"><img src="<%=request.getContextPath()%>/kaptcha/doGet" width="116" height="36" id="kaptcha" onclick="this.src='<%=request.getContextPath()%>/kaptcha/doGet'"></div>
 		    </div>
 			<button class="layui-btn login_btn" lay-submit="" lay-filter="login">登录</button>
 		</form>
 	</div>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resource/admin/layui/layui.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/boss/js/login.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resource/admin/js/login/login.js"></script>
 </body>
 </html>

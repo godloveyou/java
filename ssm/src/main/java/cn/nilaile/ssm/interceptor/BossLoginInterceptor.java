@@ -22,18 +22,30 @@ public class BossLoginInterceptor extends HandlerInterceptorAdapter   {
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());  
-        log.info("The request url is: "+url);
+        log.info(requestUri+": "+contextPath+" :"+url);
+        
+        if(url.indexOf("/login/doLogin")>0){
+        	return true;
+        }
+        
+        if (request.getHeader("x-requested-with")!= null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){//如果是ajax请求响应头会有x-requested-with 
+            log.info("ajax请求确认");
+        	return false;
+		}
         
         //获取Session  
         HttpSession session = request.getSession();  
         User u = (User)session.getAttribute("user");  
-        if(u != null){  
-            return true;  
+        
+        if(u != null){
+        	 return true;
         }
         
-        //不符合条件的，跳转到登录界面  
+      //不符合条件的，跳转到登录界面  
         request.getRequestDispatcher("/WEB-INF/boss/login/login.jsp").forward(request, response);  
         return false;
+        
+        
         
     }  
     @Override  

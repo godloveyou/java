@@ -13,9 +13,23 @@ layui.config({
 		}
 	}).resize();
 	
+	
 	//登录按钮事件
 	form.on("submit(login)",function(data){
-		window.location.href = "../../index.html";
+		console.log(JSON.stringify(data));
+		$.ajax({
+			url:'/ssm/login/doLogin',dataType:'json',type:'post',
+			data:{'username':data.field.username,'password':data.field.password,"vcode":data.field.code},
+			success:function(data){
+				if(data.success){
+					layer.msg(data.msg);
+					window.location.href = "/ssm/boss/index";
+				}else{
+					layer.msg(data.msg);
+				}
+			}
+		});
 		return false;
 	})
+	
 })
