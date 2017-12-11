@@ -228,7 +228,15 @@
 			<artifactId>protostuff-runtime</artifactId>
 			<version>1.0.8</version>
 		</dependency>
-		<!--mybatis 数据访问层 end -->
+		
+	  <dependency>
+        <groupId>com.github.axet</groupId>
+        <artifactId>kaptcha</artifactId>
+        <version>0.0.9</version>
+    </dependency>
+	
+		
+		
 	</dependencies>
 	<!-- Build Settings -->
 	<!--http://maven.apache.org/pom.html#Build_Settings -->
