@@ -47,7 +47,7 @@
 				</ul>
 				<div class="layui-tab-content clildFrame">
 					<div class="layui-tab-item layui-show">
-						<iframe src="/ssm/boss/main"></iframe>
+						<iframe src="/boss/main"></iframe>
 					</div>
 				</div>
 			</div>

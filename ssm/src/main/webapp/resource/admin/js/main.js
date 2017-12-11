@@ -11,7 +11,7 @@ layui.config({
 	})
 
 	//动态获取文章总数和待审核文章数量,最新文章
-	$.get("../json/newsList.json",
+	$.get("/resource/admin/json/newsList.json",
 		function(data){
 			var waitNews = [];
 			$(".allNews span").text(data.length);  //文章总数
@@ -35,21 +35,21 @@ layui.config({
 	)
 
 	//图片总数
-	$.get("../json/images.json",
+	$.get("/resource/admin/json/images.json",
 		function(data){
 			$(".imgAll span").text(data.length);
 		}
 	)
 
 	//用户数
-	$.get("../json/usersList.json",
+	$.get("/resource/admin//json/usersList.json",
 		function(data){
 			$(".userAll span").text(data.length);
 		}
 	)
 
 	//新消息
-	$.get("../json/message.json",
+	$.get("/resource/admin//json/message.json",
 		function(data){
 			$(".newMessage span").text(data.length);
 		}
@@ -67,7 +67,7 @@ layui.config({
 		fillParameter(systemParameter);
 	}else{
 		$.ajax({
-			url : "../json/systemParameter.json",
+			url : "/resource/admin/json/systemParameter.json",
 			type : "get",
 			dataType : "json",
 			success : function(data){

@@ -18,12 +18,12 @@ layui.config({
 	form.on("submit(login)",function(data){
 		console.log(JSON.stringify(data));
 		$.ajax({
-			url:'/ssm/login/doLogin',dataType:'json',type:'post',
+			url:'/login/doLogin',dataType:'json',type:'post',
 			data:{'username':data.field.username,'password':data.field.password,"vcode":data.field.code},
 			success:function(data){
 				if(data.success){
 					layer.msg(data.msg);
-					window.location.href = "/ssm/boss/index";
+					window.location.href = "/boss/index";
 				}else{
 					layer.msg(data.msg);
 				}
