@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nilaile.ssm.dao.BlogAdDao">
+  <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogAd">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="callback_url" jdbcType="VARCHAR" property="callbackUrl" />
+    <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
+    <result column="sort_index" jdbcType="SMALLINT" property="sortIndex" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, description, image_url, callback_url, publish_date, sort_index
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_ad
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog_ad
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.nilaile.ssm.entity.BlogAd">
+    insert into blog_ad (id, title, description, 
+      image_url, callback_url, publish_date, 
+      sort_index)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{callbackUrl,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
+      #{sortIndex,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogAd">
+    insert into blog_ad
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="callbackUrl != null">
+        callback_url,
+      </if>
+      <if test="publishDate != null">
+        publish_date,
+      </if>
+      <if test="sortIndex != null">
+        sort_index,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackUrl != null">
+        #{callbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortIndex != null">
+        #{sortIndex,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.BlogAd">
+    update blog_ad
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="callbackUrl != null">
+        callback_url = #{callbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortIndex != null">
+        sort_index = #{sortIndex,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogAd">
+    update blog_ad
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      callback_url = #{callbackUrl,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      sort_index = #{sortIndex,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

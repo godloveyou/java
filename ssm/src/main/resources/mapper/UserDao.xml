@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nilaile.ssm.dao.UserDao">
+  <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.User">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="is_staff" jdbcType="VARCHAR" property="isStaff" />
+    <result column="is_active" jdbcType="VARCHAR" property="isActive" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, mobile, user_name, password, last_login, email, is_staff, is_active, avatar, 
+    qq, create_time
+  </sql>
+  
+  <select id="findByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_user
+    where user_name = #{username,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_user
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from blog_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="cn.nilaile.ssm.entity.User">
+  		<selectKey keyProperty="userId" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        
+    insert into blog_user (user_id, mobile, user_name, 
+      password, last_login, email, 
+      is_staff, is_active, avatar, 
+      qq, create_time)
+    values (#{userId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{lastLogin,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{isStaff,jdbcType=CHAR}, #{isActive,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.User">
+    update blog_user
+    <set>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogin != null">
+        last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="isStaff != null">
+        is_staff = #{isStaff,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.User">
+    update blog_user
+    set mobile = #{mobile,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      is_staff = #{isStaff,jdbcType=CHAR},
+      is_active = #{isActive,jdbcType=CHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>
