@@ -1,5 +1,7 @@
 package cn.nilaile.ssm.dao;
 
+import java.util.List;
+
 import cn.nilaile.ssm.entity.BlogArticle;
 
 public interface BlogArticleDao {
@@ -16,4 +18,6 @@ public interface BlogArticleDao {
     int updateByPrimaryKeyWithBLOBs(BlogArticle record);
 
     int updateByPrimaryKey(BlogArticle record);
+    
+    List<BlogArticle> findByPage();
 }

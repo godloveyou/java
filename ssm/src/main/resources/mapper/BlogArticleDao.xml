@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="cn.nilaile.ssm.dao.BlogArticleDao">
+
   <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="blog_des" jdbcType="VARCHAR" property="desc" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
     <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
@@ -20,6 +22,8 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -28,6 +32,62 @@
     from blog_article
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
+  
+  <resultMap id="detailedBlogResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
+ 	<result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="blog_des" jdbcType="VARCHAR" property="desc" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
+    <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
+    
+    <association property="blogCategory" javaType="cn.nilaile.ssm.entity.BlogCategory">
+    	<id property="cid" column="cid"/>
+	    <result property="cname" column="cname"/>
+    </association>
+    
+    <collection property="listBlogTags" ofType="cn.nilaile.ssm.entity.BlogTag">
+	    <id property="id" column="id"/>
+	    <result property="tagName" column="tag_name"/>
+    </collection>
+    
+    
+    <collection property="listBlogComment" ofType="cn.nilaile.ssm.entity.BlogComment">
+	    <id property="id" column="id"/>
+	    <result property="content" column="content"/>
+	    <result property="publishDate" column="publish_date" jdbcType="TIMESTAMP" />
+    </collection>
+  	
+  </resultMap>
+  
+  
+  <select id="findByPage" resultMap="detailedBlogResultMap">
+  		SELECT
+			A.title,
+			A.blog_des,
+			A.click_count,
+			A.is_recommend,
+			A.publish_date,
+			B.cid,
+			B.cname,
+			C.id,
+			C.tag_name,
+			D.id,
+			D.content,
+			D.publish_date,
+			D.user_id
+		FROM
+			blog_article A
+		LEFT JOIN blog_category B ON A.category_id = b.cid
+		LEFT JOIN blog_article_tag M ON M.article_id = A.id
+		LEFT JOIN blog_tag C ON M.tag_id = C.id
+		LEFT JOIN blog_comment D ON A.id = D.article_id
+		ORDER BY A.publish_date desc
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blog_article
     where id = #{id,jdbcType=INTEGER}
@@ -52,7 +112,7 @@
         title,
       </if>
       <if test="desc != null">
-        desc,
+        blog_des,
       </if>
       <if test="clickCount != null">
         click_count,

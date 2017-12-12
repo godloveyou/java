@@ -24,6 +24,8 @@ public class User {
     private String qq;
 
     private Date createTime;
+    
+    
 
     public String getUserId() {
         return userId;

@@ -53,7 +53,7 @@
 	<bean class="cn.nilaile.ssm.exception.GlobalExceptionResolver" />
 	
 	
-	<!-- 配置验证码 -->
+	<!-- 配置图片验证码 -->
 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
         <property name="config">  
             <bean class="com.google.code.kaptcha.util.Config">  

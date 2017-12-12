@@ -1,6 +1,7 @@
 package cn.nilaile.ssm.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class BlogArticle {
     private Integer id;
@@ -20,8 +21,42 @@ public class BlogArticle {
     private String userId;
 
     private String content;
+    
+    private BlogCategory blogCategory;
+    
+    private List<BlogTag> listBlogTags;
+    
+    private List<BlogComment> listBlogComment;
 
-    public Integer getId() {
+    
+    
+    public List<BlogComment> getListBlogComment() {
+		return listBlogComment;
+	}
+
+	public void setListBlogComment(List<BlogComment> listBlogComment) {
+		this.listBlogComment = listBlogComment;
+	}
+
+	public List<BlogTag> getListBlogTags() {
+		return listBlogTags;
+	}
+
+	public void setListBlogTags(List<BlogTag> listBlogTags) {
+		this.listBlogTags = listBlogTags;
+	}
+
+	
+
+	public BlogCategory getBlogCategory() {
+		return blogCategory;
+	}
+
+	public void setBlogCategory(BlogCategory blogCategory) {
+		this.blogCategory = blogCategory;
+	}
+
+	public Integer getId() {
         return id;
     }
 

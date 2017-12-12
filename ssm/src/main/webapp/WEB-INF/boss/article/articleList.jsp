@@ -1,3 +1,5 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@include file="../common/tag.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +11,9 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
-	<link rel="stylesheet" href="../../css/news.css" media="all" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/css/news.css" media="all" />
 </head>
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
@@ -53,19 +55,36 @@
 				<tr>
 					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 					<th style="text-align:left;">文章标题</th>
-					<th>发布人</th>
-					<th>审核状态</th>
-					<th>浏览权限</th>
-					<th>是否展示</th>
+					<th>点击</th>
+					<th>是否置顶</th>
+					<th>分类</th>
 					<th>发布时间</th>
 					<th>操作</th>
 				</tr> 
 		    </thead>
-		    <tbody class="news_content"></tbody>
+		    <tbody class="news_content">
+		    	<c:forEach var="user" items="${userlist}">
+		    	<tr>
+					<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>
+					<td align="left">'+currData[i].newsName</td>
+					<td>currData[i].newsAuthor</td>
+					
+					<td>currData[i].newsLook</td>
+					<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow"'+currData[i].isShow></td>
+					<td>'+currData[i].newsTime</td>'
+					<td>
+						<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>
+						<a class="layui-btn layui-btn-normal layui-btn-mini news_collect"><i class="layui-icon">&#xe600;</i> 收藏</a>
+						<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId"><i class="layui-icon">&#xe640;</i> 删除</a>
+					</td>
+				</tr>
+				</c:forEach>
+		    
+		    </tbody>
 		</table>
 	</div>
 	<div id="page"></div>
-	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resource/admin/layui/layui.js"></script>
 	<script type="text/javascript" src="newsList.js"></script>
 </body>
 </html>
