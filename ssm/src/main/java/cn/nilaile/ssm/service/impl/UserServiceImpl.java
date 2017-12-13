@@ -33,7 +33,6 @@ public class UserServiceImpl implements IUserService{
 		
 		return this.findByUserName(username);
 	}
-
 	
 
 }

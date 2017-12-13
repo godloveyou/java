@@ -6,7 +6,7 @@
 },{
 	"title" : "文章列表",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "/boss/article/list",
 	"spread" : false
 },{
 	"title" : "友情链接",

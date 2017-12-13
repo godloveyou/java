@@ -3,6 +3,8 @@ package cn.nilaile.ssm.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BlogArticle {
     private Integer id;
 
@@ -14,6 +16,7 @@ public class BlogArticle {
 
     private String isRecommend;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
     private Integer categoryId;
