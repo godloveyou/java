@@ -47,7 +47,7 @@
 	</javaClientGenerator>  
 	   
 	<!--对应数据库表名 -->  
-	<table tableName="blog_category" domainObjectName="BlogCategory" mapperName="BlogCategoryDao" enableCountByExample="false"  enableUpdateByExample="false" 
+	<table tableName="blog_article_tag" domainObjectName="BlogArticleTag"  mapperName="BlogArticleTagDao"  enableCountByExample="false"  enableUpdateByExample="false" 
 	 enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >
 	</table>
 	

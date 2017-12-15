@@ -7,5 +7,7 @@ import cn.nilaile.ssm.entity.BlogArticle;
 public interface IBlogArticleService {
 
 	public List<BlogArticle> findByPage();
+
+	public void save(BlogArticle a, String checkedTags);
 	
 }

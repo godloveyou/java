@@ -27,8 +27,6 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from blog_article
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -92,22 +90,24 @@
     delete from blog_article
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.nilaile.ssm.entity.BlogArticle">
-    insert into blog_article (id, title, desc, 
+  
+  <insert id="insert"  useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
+    insert into blog_article ( title, desc, 
       click_count, is_recommend, publish_date, 
       category_id, user_id, content
       )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
       #{clickCount,jdbcType=INTEGER}, #{isRecommend,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
       #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogArticle">
+  
+  
+  
+  <insert id="insertSelective"   useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
     insert into blog_article
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+    
       <if test="title != null">
         title,
       </if>
@@ -134,9 +134,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>

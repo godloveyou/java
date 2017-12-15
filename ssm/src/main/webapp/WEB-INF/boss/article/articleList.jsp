@@ -33,7 +33,7 @@
 			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
 		</div>
 		<div class="layui-inline">
-			<div class="layui-form-mid layui-word-aux">提醒信息</div>
+			<div class="layui-form-mid layui-word-aux">${msg }</div>
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
@@ -61,22 +61,24 @@
 		    </thead>
 		    <tbody class="news_content">
 		    	<c:forEach var="article" items="${articleList}">
-		    	<tr>
-					<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>
-					<td align="left">${article.title }</td>
-					<td>${article.clickCount}</td>
-					<c:if test="${article.isRecommend}==1">
-						<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow false"></td>
-					</c:if>
-					<td>${article.blogCategory.cname}</td>
-					<td><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></td>
-					<td>
-						<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>
-						<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId"><i class="layui-icon">&#xe640;</i> 删除</a>
-					</td>
-				</tr>
+			    	<tr>
+						<td><input type="checkbox" name="checked" lay-skin="primary" lay-filter="choose"></td>
+						<td align="left">${article.title }</td>
+						<td>${article.clickCount}</td>
+						<c:if test="${article.isRecommend==0}">
+							<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow" ></td>
+						</c:if>
+						<c:if test="${article.isRecommend==1}">
+							<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow"  checked></td>
+						</c:if>
+						<td>${article.blogCategory.cname}</td>
+						<td><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></td>
+						<td>
+							<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>
+							<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId"><i class="layui-icon">&#xe640;</i> 删除</a>
+						</td>
+					</tr>
 				</c:forEach>
-		    
 		    </tbody>
 		</table>
 	</div>

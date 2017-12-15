@@ -1,7 +1,7 @@
 package cn.nilaile.ssm.dao;
 
 import cn.nilaile.ssm.entity.BlogTag;
-
+import java.util.*;
 public interface BlogTagDao {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +14,6 @@ public interface BlogTagDao {
     int updateByPrimaryKeySelective(BlogTag record);
 
     int updateByPrimaryKey(BlogTag record);
+    
+    List<BlogTag> findAll();
 }

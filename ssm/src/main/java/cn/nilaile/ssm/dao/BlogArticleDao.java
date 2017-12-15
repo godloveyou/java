@@ -1,6 +1,7 @@
 package cn.nilaile.ssm.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.nilaile.ssm.entity.BlogArticle;
 
@@ -20,4 +21,5 @@ public interface BlogArticleDao {
     int updateByPrimaryKey(BlogArticle record);
     
     List<BlogArticle> findByPage();
+
 }

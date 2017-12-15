@@ -1,5 +1,7 @@
 package cn.nilaile.ssm.dao;
 
+import java.util.List;
+
 import cn.nilaile.ssm.entity.BlogCategory;
 
 public interface BlogCategoryDao {
@@ -14,4 +16,6 @@ public interface BlogCategoryDao {
     int updateByPrimaryKeySelective(BlogCategory record);
 
     int updateByPrimaryKey(BlogCategory record);
+    
+    List<BlogCategory> findAll();
 }
