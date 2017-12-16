@@ -72,7 +72,7 @@ public class BlogArticleController {
 		a.setUserId(u.getUserId());
 		a.setPublishDate(new java.util.Date());
 		articleService.save(a,checkedTags);
-		redirectAttributes.addAttribute("msg", "添加成功");
+		redirectAttributes.addFlashAttribute("msg", "添加成功");
 		return "redirect:/boss/article/list"; 
 	}
 	
