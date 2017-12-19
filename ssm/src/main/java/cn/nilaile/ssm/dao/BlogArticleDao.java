@@ -3,6 +3,8 @@ package cn.nilaile.ssm.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.nilaile.ssm.entity.BlogArticle;
 
 public interface BlogArticleDao {
@@ -20,6 +22,8 @@ public interface BlogArticleDao {
 
     int updateByPrimaryKey(BlogArticle record);
     
-    List<BlogArticle> findByPage();
+    List<BlogArticle> findByPage(BlogArticle blogArticle);
+    
+    
 
 }

@@ -235,7 +235,12 @@
         <version>0.0.9</version>
     </dependency>
 	
-		
+	<!-- 引入分页插件 -->
+	 <dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper</artifactId>
+	    <version>5.0.0</version>
+	</dependency>
 		
 	</dependencies>
 	<!-- Build Settings -->

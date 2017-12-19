@@ -10,9 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.github.pagehelper.PageHelper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,13 +21,10 @@ import cn.nilaile.ssm.util.Md5SaltUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/spring-dao.xml")
-public class ArticleDaoTest {
+public class ArticleServiceDao {
 	
 	@Autowired
 	private BlogArticleDao blogArticleDao;
-	
-	@Autowired
-	private BlogArticleTagDao blogArticleTagDao;
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
@@ -57,16 +51,16 @@ public class ArticleDaoTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testFindByPage(){
-		PageHelper.startPage(1, 1);
-		List<BlogArticle> list = blogArticleDao.findByPage(null);
-		System.out.println(list.size());
-		for(int i=0;i<list.size();i++){
-			BlogArticle b = list.get(i);
-			List<BlogTag> listBlogTag = b.getListBlogTags();
-			System.out.println("TAG NUMBER IS"+listBlogTag.size());
-			System.out.println(b.getBlogCategory().getCname());
-		}
+//		List<BlogArticle> list = blogArticleDao.findByPage();
+//		System.out.println(list.size());
+//		for(int i=0;i<list.size();i++){
+//			BlogArticle b = list.get(i);
+//			List<BlogTag> listBlogTag = b.getListBlogTags();
+//			System.out.println("TAG NUMBER IS"+listBlogTag.size());
+//			System.out.println(b.getBlogCategory().getCname());
+//		}
 	}
 	
 	@Test
@@ -76,12 +70,6 @@ public class ArticleDaoTest {
 		LOG.info("success: "+a.getContent());
 	}
 	
-	@Test
-	@Ignore
-	public void testDelteByIds(){
-		String[] tagIds = {""};
-		blogArticleTagDao.deleteByIds(tagIds);
-	}
 	
 
 }

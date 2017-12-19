@@ -6,18 +6,20 @@
   <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="blog_des" jdbcType="VARCHAR" property="desc" />
+    <result column="blog_des" jdbcType="VARCHAR" property="blogDes" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
     <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.nilaile.ssm.entity.BlogArticle">
+  
+  <resultMap extends="BaseResultMap"   id="ResultMapWithBLOBs"   type="cn.nilaile.ssm.entity.BlogArticle">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  
   <sql id="Base_Column_List">
-    id, title, desc, click_count, is_recommend, publish_date, category_id, user_id
+    id, title, blog_des, click_count, is_recommend, publish_date, category_id, user_id
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -26,7 +28,8 @@
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+     <include refid="Blob_Column_List" />
     from blog_article
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -34,8 +37,9 @@
   
   
   <resultMap id="detailedBlogResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
+  <result column="id" jdbcType="VARCHAR" property="id" />
  	<result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="blog_des" jdbcType="VARCHAR" property="desc" />
+    <result column="blog_des" jdbcType="VARCHAR" property="blogDes" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
     <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
@@ -60,8 +64,9 @@
   </resultMap>
   
   
-  <select id="findByPage" resultMap="detailedBlogResultMap">
+  <select id="findByPage"  resultMap="detailedBlogResultMap"  parameterType="cn.nilaile.ssm.entity.BlogArticle" >
   		SELECT
+  			A.id,
 			A.title,
 			A.blog_des,
 			A.click_count,
@@ -81,7 +86,10 @@
 		LEFT JOIN blog_article_tag M ON M.article_id = A.id
 		LEFT JOIN blog_tag C ON M.tag_id = C.id
 		LEFT JOIN blog_comment D ON A.id = D.article_id
-		ORDER BY A.publish_date desc
+		<where>
+			    <if test="title != null">A.title  like CONCAT( '%', '${title}',  '%')</if>
+		</where>
+		
   </select>
   
   
@@ -92,11 +100,11 @@
   </delete>
   
   <insert id="insert"  useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
-    insert into blog_article ( title, desc, 
+    insert into blog_article ( title, blog_des, 
       click_count, is_recommend, publish_date, 
       category_id, user_id, content
       )
-    values (#{title,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{blogDes,jdbcType=VARCHAR}, 
       #{clickCount,jdbcType=INTEGER}, #{isRecommend,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
       #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -111,7 +119,7 @@
       <if test="title != null">
         title,
       </if>
-      <if test="desc != null">
+      <if test="blogDes != null">
         blog_des,
       </if>
       <if test="clickCount != null">
@@ -137,8 +145,8 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="blogDes != null">
+        #{blogDes,jdbcType=VARCHAR},
       </if>
       <if test="clickCount != null">
         #{clickCount,jdbcType=INTEGER},
@@ -166,8 +174,8 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="blogDes!= null">
+        blog_des = #{blogDes,jdbcType=VARCHAR},
       </if>
       <if test="clickCount != null">
         click_count = #{clickCount,jdbcType=INTEGER},
@@ -193,7 +201,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.nilaile.ssm.entity.BlogArticle">
     update blog_article
     set title = #{title,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      blog_des = #{blogDes,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
       is_recommend = #{isRecommend,jdbcType=VARCHAR},
       publish_date = #{publishDate,jdbcType=TIMESTAMP},
@@ -205,7 +213,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogArticle">
     update blog_article
     set title = #{title,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      blog_des = #{blogDes,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
       is_recommend = #{isRecommend,jdbcType=VARCHAR},
       publish_date = #{publishDate,jdbcType=TIMESTAMP},

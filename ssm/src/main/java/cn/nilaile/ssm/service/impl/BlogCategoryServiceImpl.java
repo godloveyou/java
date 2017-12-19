@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.nilaile.ssm.dao.BlogTagDao;
+import cn.nilaile.ssm.entity.BlogArticle;
 import cn.nilaile.ssm.entity.BlogCategory;
 import cn.nilaile.ssm.entity.BlogTag;
 import cn.nilaile.ssm.service.IBlogTagService;
@@ -19,5 +20,6 @@ public class BlogCategoryServiceImpl implements IBlogTagService{
 	public List<BlogTag> findAll(){
 		return blogTagDao.findAll();
 	}
+
 
 }

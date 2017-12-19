@@ -1,5 +1,7 @@
 package cn.nilaile.ssm.dao;
 
+import java.util.List;
+
 import cn.nilaile.ssm.entity.BlogArticleTag;
 
 public interface BlogArticleTagDao {
@@ -14,4 +16,10 @@ public interface BlogArticleTagDao {
     int updateByPrimaryKeySelective(BlogArticleTag record);
 
     int updateByPrimaryKey(BlogArticleTag record);
+    
+    List<BlogArticleTag> findByArticle(int aid);
+
+	String findArticleTagIds(Integer articleId);
+	
+	void deleteByIds(String[]  articleTagIds);
 }

@@ -9,16 +9,44 @@
   <sql id="Base_Column_List">
     id, article_id, tag_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from blog_article_tag
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <resultMap type="java.lang.String"  id="stringResult"></resultMap>
+  
+  <select id="findArticleTagIds"  parameterType="java.lang.Integer" resultMap="stringResult">
+    select 
+    	GROUP_CONCAT(tag_id) as article_tag_ids
+    from blog_article_tag
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  
+  
+    <select id="findByArticle" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_article_tag
+    where article_id = #{aid,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blog_article_tag
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteByIds"  parameterType="java.util.List">
+  	delete from blog_article_tag
+  	where id in
+  	<foreach item="articleTagIds" collection="array" open="(" separator="," close=")">  
+        #{articleTagIds}  
+        </foreach>  
+  </delete>
+  
   <insert id="insert"  useGeneratedKeys="true"   parameterType="cn.nilaile.ssm.entity.BlogArticleTag">
     insert into blog_article_tag ( article_id, tag_id
       )

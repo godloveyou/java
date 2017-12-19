@@ -7,11 +7,26 @@ layui.config({
 		layedit = layui.layedit,
 		laydate = layui.laydate,
 		$ = layui.jquery;
-		var element = layui.element();
-
+	var element = layui.element();
+	
+	var oldTagIds = $("#oldArticleTags").val().split(",");
+	var allTags = $("input[name='tagids']");
+	
+	for(var i=0;i<allTags.length;i++){
+		var tag_i = $(allTags[i]);
+		for(var j=0;j<oldTagIds.length;j++){
+			var did = tag_i.attr("data-tagid");
+			if(did==oldTagIds[j]){
+				tag_i.attr("checked","");
+			}
+		}
+	}
+	form.render();
+	
 	//创建一个编辑器
  	var editIndex = layedit.build('news_content');
  	var addNewsArray = [],addNews;
+ 	
  	form.on("submit(addNews)",function(data){
  		var checkedTags =$('input[name="tagids"]:checked');
  		var checkedTagIds = getCheckedTagIds(checkedTags);
@@ -33,7 +48,6 @@ layui.config({
  		}else{
  			$("#recommend").val("0");
  		}
- 		
  		console.log(JSON.stringify(data.field));
  		return true;
  	})

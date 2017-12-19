@@ -5,64 +5,108 @@ layui.config({
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		laypage = layui.laypage,
 		$ = layui.jquery;
-
+	
+	var msg = $("#tipmsg").text()|| '';
+	if(msg.length>0){
+		// layer.msg(msg,{ area: ['100px', '60px'],offset: 'rt'});
+		 layer.msg(msg);
+	}
+	
+	laypage({
+	curr: $("#curr").val(),
+	cont : "page",
+	pages : $("#totalPage").val(),
+	jump : function(obj,first){
+//    	console.log("obj=="+obj.curr);
+//    	console.log("limit=="+obj.limit);
+//    	console.log("first=="+first);
+    	if(!first){
+    		location.href="/boss/article/list?curr="+obj.curr;
+    	}
+	}
+})
+	
+ 	form.on("submit(queryArticle)",function(data){
+ 		
+ 	});
+	
+//查询
+$(".search_btn").click(function(){
+	var _title = $("#title").val() || '';
+	if(_title.length<1){
+		return;
+	}
+	$("#queryForm").submit();
+});
 	//添加文章
 	//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
 	$(window).one("resize",function(){
 		$(".newsAdd_btn").click(function(){
-			var index = layui.layer.open({
-				title : "添加文章",
-				type : 2,
-				content : "/boss/article/add",
-				success : function(layero, index){
-					setTimeout(function(){
-						layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-							tips: 3
-						});
-					},500)
-				}
-			})			
-			layui.layer.full(index);
+			location.href="/boss/article/add";
+//			var index = layui.layer.open({
+//				title : "添加文章",
+//				type : 2,
+//				content : "/boss/article/add",
+//				success : function(layero, index){
+//					setTimeout(function(){
+//						layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
+//							tips: 3
+//						});
+//					},500)
+//				}
+//			})			
+//			layui.layer.full(index);
 		})
 	}).resize();
 
 	//推荐文章
-	$(".recommend").click(function(){
-		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
-		if($checkbox.is(":checked")){
-			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-				layer.msg("推荐成功");
-            },2000);
-		}else{
-			layer.msg("请选择需要推荐的文章");
-		}
-	})
+//	$(".recommend").click(function(){
+//		var $checkbox = $(".news_list").find('tbody input[type="checkbox"]:not([name="show"])');
+//		if($checkbox.is(":checked")){
+//			var index = layer.msg('推荐中，请稍候',{icon: 16,time:false,shade:0.8});
+//            setTimeout(function(){
+//                layer.close(index);
+//				layer.msg("推荐成功");
+//            },2000);
+//		}else{
+//			layer.msg("请选择需要推荐的文章");
+//		}
+//	})
 
 
 	//批量删除
 	$(".batchDel").click(function(){
 		var $checkbox = $('.news_list tbody input[type="checkbox"][name="checked"]');
 		var $checked = $('.news_list tbody input[type="checkbox"][name="checked"]:checked');
+		var checkedIds = [];
 		if($checkbox.is(":checked")){
 			layer.confirm('确定删除选中的信息？',{icon:3, title:'提示信息'},function(index){
 				var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
-	            setTimeout(function(){
-	            	//删除数据
-	            	for(var j=0;j<$checked.length;j++){
-	            		for(var i=0;i<newsData.length;i++){
-							if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
-								newsData.splice(i,1);
-								newsList(newsData);
-							}
-						}
-	            	}
-	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
-	            	form.render();
-	                layer.close(index);
-					layer.msg("删除成功");
-	            },2000);
+				checkedIds = [];
+				for(var j=0;j<$checked.length;j++){
+					var aid = $checked.eq(j).parents("tr").find(".news_del").attr("data-id");
+					checkedIds.push(aid);
+            	}
+				if(checkedIds.length>0){
+					 layer.close(index);
+					location.href= '/boss/article/delete/'+checkedIds.join(",");
+				}
+					
+//	            setTimeout(function(){
+//	            	//删除数据
+//	            	for(var j=0;j<$checked.length;j++){
+//	            		for(var i=0;i<newsData.length;i++){
+//							if(newsData[i].newsId == $checked.eq(j).parents("tr").find(".news_del").attr("data-id")){
+//								newsData.splice(i,1);
+//								newsList(newsData);
+//							}
+//						}
+//	            	}
+//	            	$('.news_list thead input[type="checkbox"]').prop("checked",false);
+//	            	form.render();
+//	                layer.close(index);
+//					layer.msg("删除成功");
+//	            },2000);
 	        })
 		}else{
 			layer.msg("请选择需要删除的文章");
@@ -114,13 +158,8 @@ layui.config({
 	$("body").on("click",".news_del",function(){  //删除
 		var _this = $(this);
 		layer.confirm('确定删除此信息？',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
-			for(var i=0;i<newsData.length;i++){
-				if(newsData[i].newsId == _this.attr("data-id")){
-					newsData.splice(i,1);
-					newsList(newsData);
-				}
-			}
+			var aid = _this.attr("data-id");
+			location.href='/boss/article/delete/'+aid;
 			layer.close(index);
 		});
 	})

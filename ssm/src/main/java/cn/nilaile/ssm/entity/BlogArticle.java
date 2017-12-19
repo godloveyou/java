@@ -10,7 +10,7 @@ public class BlogArticle {
 
     private String title;
 
-    private String desc;
+    private String blogDes;
 
     private Integer clickCount;
 
@@ -75,15 +75,17 @@ public class BlogArticle {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getDesc() {
-        return desc;
-    }
+    
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
-    }
+    public String getBlogDes() {
+		return blogDes;
+	}
 
-    public Integer getClickCount() {
+	public void setBlogDes(String blogDes) {
+		this.blogDes = blogDes;
+	}
+
+	public Integer getClickCount() {
         return clickCount;
     }
 

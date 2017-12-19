@@ -14,6 +14,14 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/layui/css/layui.css" media="all" />
 </head>
 <body class="childrenBody">
+<!-- <blockquote class="layui-elem-quote"> <a href="http://www.layui.com" class="layui-btn">返回列表</a></blockquote> -->
+<blockquote class="layui-elem-quote">
+<span class="layui-breadcrumb">
+  <a href="/boss/article/list">文章列表</a>
+  <a><cite>发布文章</cite></a>
+</span>
+</blockquote>
+
 	<form class="layui-form" action="<%=request.getContextPath()%>/boss/article/doAdd"  method="post">
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标题</label>
@@ -75,8 +83,9 @@
 		
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addNews">立即提交</button>
+				<button class="layui-btn" lay-submit=""  lay-filter="addNews">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				 <a href="/boss/article/list"  	class="layui-btn layui-btn-primary" >返回列表</a>
 		    </div>
 		</div>
 	</form>
