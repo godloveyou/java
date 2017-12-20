@@ -18,4 +18,6 @@ public interface BlogCategoryDao {
     int updateByPrimaryKey(BlogCategory record);
     
     List<BlogCategory> findAll();
+
+	BlogCategory findByName(String cname);
 }

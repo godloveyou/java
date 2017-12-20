@@ -6,6 +6,9 @@
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
     <result column="tag_id" jdbcType="INTEGER" property="tagId" />
   </resultMap>
+    <resultMap type="java.lang.String"  id="stringResult"></resultMap>
+    <resultMap type="java.lang.Integer"  id="integerResult"></resultMap>
+    
   <sql id="Base_Column_List">
     id, article_id, tag_id
   </sql>
@@ -17,7 +20,16 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <resultMap type="java.lang.String"  id="stringResult"></resultMap>
+    <select id="findByTagId"  parameterType="java.lang.Integer"  resultMap="integerResult">
+    select 
+  	count(1) as countNum
+    from blog_article_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+
   
   <select id="findArticleTagIds"  parameterType="java.lang.Integer" resultMap="stringResult">
     select 

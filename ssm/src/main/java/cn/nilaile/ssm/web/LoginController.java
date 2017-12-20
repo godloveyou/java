@@ -27,6 +27,12 @@ public class LoginController {
 
 	@Autowired
 	IUserService userService;
+	
+	@RequestMapping(path = "/logout")
+	public String logout(HttpSession session){
+		session.setAttribute("user", null);
+		return "login/login";
+	}
 
 	@RequestMapping(path = "/doLogin", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody

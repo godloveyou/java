@@ -22,4 +22,6 @@ public interface BlogArticleTagDao {
 	String findArticleTagIds(Integer articleId);
 	
 	void deleteByIds(String[]  articleTagIds);
+
+	int findByTagId(Integer tagId);
 }

@@ -16,4 +16,6 @@ public interface BlogTagDao {
     int updateByPrimaryKey(BlogTag record);
     
     List<BlogTag> findAll();
+
+	BlogTag findByName(String tagname);
 }

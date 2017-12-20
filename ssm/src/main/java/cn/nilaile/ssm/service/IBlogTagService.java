@@ -9,5 +9,16 @@ import cn.nilaile.ssm.entity.BlogTag;
 public interface IBlogTagService {
 	public List<BlogTag> findAll();
 
+	public BlogTag findById(Integer id);
+
+	public void update(BlogTag articleTag);
+
+	public void delete(String tagIds);
+
+	public BlogTag findByName(String tagname);
+
+	public int save(BlogTag t);
+
+
 
 }
