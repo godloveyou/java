@@ -17,7 +17,5 @@ public class IndexController {
 	public String main(){
 		return "main";
 	}
-	
-	
 
 }

@@ -34,6 +34,8 @@
          <!-- 多个拦截器，顺序执行 -->  
          <mvc:interceptor>  
               <mvc:mapping path="/boss/**"/>
+              <mvc:exclude-mapping path="/front/**"/>
+              <mvc:exclude-mapping path="/home/**"/>
               <mvc:exclude-mapping path="/**/*.js"/>
              <bean class="cn.nilaile.ssm.interceptor.BossLoginInterceptor"></bean>  
          </mvc:interceptor>  
