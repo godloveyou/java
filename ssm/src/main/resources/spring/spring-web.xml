@@ -29,22 +29,29 @@
     -->
     <mvc:default-servlet-handler/>
     
+     <mvc:resources mapping="/css/**"  location="/WEB-INF/front/css/"/>  
+     <mvc:resources mapping="/js/**"   location="/WEB-INF/front/js/"/>  
+     <mvc:resources mapping="/resource/**"   location="/WEB-INF/resource/"/>  
+      
+      
     <!-- 拦截器 -->  
     <mvc:interceptors>  
          <!-- 多个拦截器，顺序执行 -->  
          <mvc:interceptor>  
               <mvc:mapping path="/boss/**"/>
-              <mvc:exclude-mapping path="/front/**"/>
-              <mvc:exclude-mapping path="/home/**"/>
               <mvc:exclude-mapping path="/**/*.js"/>
-             <bean class="cn.nilaile.ssm.interceptor.BossLoginInterceptor"></bean>  
+             <bean class="cn.nilaile.ssm.interceptor.BossLoginInterceptor" />
          </mvc:interceptor>  
+         <!-- <mvc:interceptor>
+         		 <mvc:mapping path="/**" />
+         	   <bean class="cn.nilaile.ssm.interceptor.TokenInterceptor" />  
+         </mvc:interceptor> -->
     </mvc:interceptors>  
 
     <!--配置JSP　显示ViewResolver-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/boss/"/>
+        <property name="prefix" value="/WEB-INF/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
@@ -54,6 +61,10 @@
 	<!--全局异常捕捉 -->
 	<bean class="cn.nilaile.ssm.exception.GlobalExceptionResolver" />
 	
+	<!--配置文件上传  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+   	 	<property name="maxUploadSize"  value="10485760" />  
+	</bean>
 	
 	<!-- 配置图片验证码 -->
 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  

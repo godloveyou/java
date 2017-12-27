@@ -58,14 +58,11 @@ public class ArticleDaoTest {
 	
 	@Test
 	public void testFindByPage(){
-		PageHelper.startPage(1, 1);
+		//PageHelper.startPage(1, 1);
 		List<BlogArticle> list = blogArticleDao.findByPage(null);
-		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
 			BlogArticle b = list.get(i);
-			List<BlogTag> listBlogTag = b.getListBlogTags();
-			System.out.println("TAG NUMBER IS"+listBlogTag.size());
-			System.out.println(b.getBlogCategory().getCname());
+			LOG.info("COMMENTS: "+b.getListBlogComment().size());
 		}
 	}
 	

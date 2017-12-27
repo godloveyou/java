@@ -1,5 +1,7 @@
 package cn.nilaile.ssm.interceptor;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,21 +19,22 @@ public class BossLoginInterceptor extends HandlerInterceptorAdapter   {
 	 
 	@Override  
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {  
-		log.info("==================preHandler");
         //获取请求的URL  
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());  
         log.info(requestUri+": "+contextPath+" :"+url);
+//        Enumeration<String> enums = request.getHeaderNames();
+//        while(enums.hasMoreElements()){
+//        	String key = enums.nextElement();
+//        	String v = request.getHeader(key);
+//        	log.info("key ---》"+key+"------>"+v);
+//        }
         
-        if(url.indexOf("/login/doLogin")>0){
-        	return true;
-        }
-        
-        if (request.getHeader("x-requested-with")!= null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){//如果是ajax请求响应头会有x-requested-with 
-            log.info("ajax请求确认");
-        	return false;
-		}
+//        if (request.getHeader("x-requested-with")!= null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){//如果是ajax请求响应头会有x-requested-with 
+//            log.info("ajax请求确认");
+//        	return false;
+//		}
         
         //获取Session  
         HttpSession session = request.getSession();  
@@ -41,11 +44,12 @@ public class BossLoginInterceptor extends HandlerInterceptorAdapter   {
         	 return true;
         }
         
-      //不符合条件的，跳转到登录界面  
+        if(url.indexOf("/boss/doLogin")>=0){
+        	return true;
+        }
+        
         request.getRequestDispatcher("/WEB-INF/boss/login/login.jsp").forward(request, response);  
         return false;
-        
-        
         
     }  
     @Override  

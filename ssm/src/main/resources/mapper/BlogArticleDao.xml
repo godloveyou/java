@@ -36,23 +36,23 @@
   
   
   
-  <resultMap id="detailedBlogResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
-  <result column="id" jdbcType="VARCHAR" property="id" />
+  <resultMap id="detailedBlogResultMap"  type="cn.nilaile.ssm.entity.BlogArticle" autoMapping="true">
+  	<result column="id" jdbcType="VARCHAR" property="id" />
  	<result column="title" jdbcType="VARCHAR" property="title" />
     <result column="blog_des" jdbcType="VARCHAR" property="blogDes" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
     <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
     
-    <association property="blogCategory" javaType="cn.nilaile.ssm.entity.BlogCategory">
+<!--     <association property="blogCategory" javaType="cn.nilaile.ssm.entity.BlogCategory">
     	<id property="cid" column="cid"/>
 	    <result property="cname" column="cname"/>
     </association>
     
-    <collection property="listBlogTags" ofType="cn.nilaile.ssm.entity.BlogTag">
+    <collection property="listBlogTags" ofType="cn.nilaile.ssm.entity.BlogTag" >
 	    <id property="id" column="id"/>
 	    <result property="tagName" column="tag_name"/>
-    </collection>
+    </collection> -->
     
     
     <collection property="listBlogComment" ofType="cn.nilaile.ssm.entity.BlogComment">
@@ -63,6 +63,11 @@
   	
   </resultMap>
   
+  <!-- 查询文章所有标签 -->
+<!--     <select id="findArticleTags"   resultMap="cn.nilaile.ssm.entity.BlogComment"  parameterType="integer" >
+    	select id,article_id from blog_article_tag  where article_id=#{id}
+    </select>
+   -->
   
   <select id="findByPage"  resultMap="detailedBlogResultMap"  parameterType="cn.nilaile.ssm.entity.BlogArticle" >
   		SELECT
@@ -72,10 +77,6 @@
 			A.click_count,
 			A.is_recommend,
 			A.publish_date,
-			B.cid,
-			B.cname,
-			C.id,
-			C.tag_name,
 			D.id,
 			D.content,
 			D.publish_date,
@@ -83,8 +84,6 @@
 		FROM
 			blog_article A
 		LEFT JOIN blog_category B ON A.category_id = b.cid
-		LEFT JOIN blog_article_tag M ON M.article_id = A.id
-		LEFT JOIN blog_tag C ON M.tag_id = C.id
 		LEFT JOIN blog_comment D ON A.id = D.article_id
 		<where>
 			    <if test="title != null">A.title  like CONCAT( '%', '${title}',  '%')</if>

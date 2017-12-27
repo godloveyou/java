@@ -12,6 +12,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/editormd2.5/css/editormd.css" media="all" />
 </head>
 <body class="childrenBody">
 <blockquote class="layui-elem-quote">
@@ -55,8 +56,7 @@
 			</div>
 		</div>
 		 -->
-		 <input type="hidden"  name="checkedTags"  id="checkedTags">
-		  <input type="hidden"  name="articleContent"  id="articleContent">
+		    <input type="hidden"  name="checkedTags"  id="checkedTags">
 		   <input type="hidden"  name="recommend"  id="recommend" value="0">
 		   <input type="hidden"  name="id"  value="${article.id }" >
 		<div class="layui-form-item">
@@ -68,8 +68,10 @@
 		
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章内容</label>
-			<div class="layui-input-block">
+			<div class="layui-input-block"  id="article_content">
 				<textarea class="layui-textarea layui-hide" name="content"  lay-verify="content"   id="news_content">${article.content}</textarea>
+				<!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+ 			   <textarea class="editormd-html-textarea"  name="articleContent"  id="articleContentText"></textarea>
 			</div>
 		</div>
 		
@@ -91,6 +93,27 @@
 		</div>
 	</form>
 	<script type="text/javascript"  src="<%=request.getContextPath()%>/resource/admin//layui/layui.js"></script>
+	<script type="text/javascript"  src="<%=request.getContextPath()%>/resource/admin/editormd2.5/js/jquery.min.js"></script>
+	<script type="text/javascript"  src="<%=request.getContextPath()%>/resource/admin/editormd2.5/editormd.js"></script>
+	<script src="<%=request.getContextPath()%>/resource/admin/editormd2.5/languages/zh.js"></script>
 	<script type="text/javascript"  src="<%=request.getContextPath()%>/resource/admin/js/article/articleEdit.js"></script>
+	<script>
+	var mdEditor;
+	$(function(){
+		mdEditor =  editormd("article_content", {
+	         width   : "90%",
+	         height  : 640,
+	         syncScrolling : "single",
+	         //你的lib目录的路径，我这边用JSP做测试的
+	         path    : "<%=request.getContextPath()%>/resource/admin/editormd2.5/lib/",
+	         //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+	         saveHTMLToTextarea : true,
+	         imageUpload : true,
+	         imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+             imageUploadURL : "/uploadImg"
+	     });
+	})
+	</script>
+	
 </body>
 </html>

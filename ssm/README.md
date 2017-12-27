@@ -35,3 +35,10 @@ https://www.cnblogs.com/gosky/p/5518748.html
           #{result,jdbcType=INTEGER,mode=OUT}
         )
     </select>
+ 
+
+ ##使用插件
+ 编辑器   https://pandao.github.io/editor.md/
+ Editor.md 是国人开发的开源在线Markdown编辑器，单纯基于前端JavaScript，无需后台代码加持，适用于任何语言（仅在上传图片功能时需要一点后台代码与之配合，其余都交给Editor.md吧），因为是中国人开发的，对中文支持得相当到位
+ 
+ https://www.hexcode.cn/article/show/editormd
