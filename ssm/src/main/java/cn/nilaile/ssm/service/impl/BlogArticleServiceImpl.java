@@ -104,4 +104,10 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 		
 	}
 
+	@Override
+	public BlogArticle findDetailById(Integer id) {
+		// TODO Auto-generated method stub
+		return blogArticleDao.findDetailById(id);
+	}
+
 }

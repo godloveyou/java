@@ -293,6 +293,7 @@
   color: #999;
   padding: 3px 8px;
   border: 1px solid #ddd;
+  display: inline-block;
 }
 
 .editormd-dialog-close {

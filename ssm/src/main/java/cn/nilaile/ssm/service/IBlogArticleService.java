@@ -15,5 +15,7 @@ public interface IBlogArticleService {
 	public void update(BlogArticle a, String checkedTags);
 
 	public void delete(String aids);
+
+	public BlogArticle findDetailById(Integer id);
 	
 }

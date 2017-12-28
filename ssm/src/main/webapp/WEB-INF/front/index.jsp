@@ -32,32 +32,28 @@
     <div class="section">
         <ul class="artical-cate">
             <li class="on"><a href="/"><span>最新文章</span></a></li>
-         <!--    <li style="text-align:center"><a href="/front/dump/index.html"><span>Dump</span></a></li>
-            <li style="text-align:right"><a href="/front/project/index.html"><span>Project</span></a></li> -->
         </ul>
 
         <div class="cate-bar"><span id="cateBar"></span></div>
 
         <ul class="artical-list">
-         <c:forEach var="article" items="${listArticle}">
-         	<li>
-                <h2><a href="article.html">${article.title }</a></h2>
-                <div class="artical-list-date">
-                	<span class="timeSpan"><i class="iconfont">&#xe6a9;</i><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></span>
-                	<span class="viewCount"><i class="iconfont">&#xe618;</i>${article. clickCount}</span>
-                	<span class="commentsCount"><i class="iconfont">&#xe67e;</i>${fn:length(article.listBlogComment) }</span>
-                </div>
-                <div class="title-desc">${article.blogDes }</div>
-                <div class="line"></div>
-                <div class="artical-list-tag" style="martin-top:10px">
-                	<c:forEach var="tags" items="${article.listBlogTags }">
-                		<a href="/tag/${tags.tagName}" class="tag"><span class="tag_name">${tags.tagName}</span></a>
-                	</c:forEach>
-                		
-                </div>
-            </li>
-         </c:forEach>
-        
+		         <c:forEach var="article" items="${listArticle}">
+		         	<li>
+		                <h2><a href="/article/${article.id}">${article.title }</a></h2>
+		                <div class="artical-list-date">
+		                	<span class="timeSpan"><i class="iconfont">&#xe6a9;</i><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+		                	<span class="viewCount"><i class="iconfont">&#xe618;</i>${article. clickCount}</span>
+		                	<span class="commentsCount"><i class="iconfont">&#xe67e;</i>${fn:length(article.listBlogComment) }</span>
+		                </div>
+		                <div class="title-desc">${article.blogDes }</div>
+		                <div class="line"></div>
+		                <div class="artical-list-tag" style="martin-top:10px">
+		                	<c:forEach var="tags" items="${article.listBlogTags }">
+		                		<a href="/tag/${tags.tagName}" class="tag"><span class="tag_name">${tags.tagName}</span></a>
+		                	</c:forEach>
+		                </div>
+		            </li>
+		         </c:forEach>
         </ul>
     </div>
     <!-- 左侧导航 -->

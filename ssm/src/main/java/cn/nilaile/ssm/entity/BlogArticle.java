@@ -23,7 +23,9 @@ public class BlogArticle {
 
     private String userId;
 
-    private String content;
+    private String contentHtml;
+    
+    private String contentMd;
     
     private BlogCategory blogCategory;
     
@@ -125,11 +127,21 @@ public class BlogArticle {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getContent() {
-        return content;
-    }
+	public String getContentHtml() {
+		return contentHtml;
+	}
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public void setContentHtml(String contentHtml) {
+		this.contentHtml = contentHtml;
+	}
+
+	public String getContentMd() {
+		return contentMd;
+	}
+
+	public void setContentMd(String contentMd) {
+		this.contentMd = contentMd;
+	}
+
+  
 }

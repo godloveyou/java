@@ -113,16 +113,17 @@ public class BlogArticleController {
 	public String doEdit(HttpServletRequest req,final RedirectAttributes redirectAttributes){
 		String aid = req.getParameter("id");
 		String title = req.getParameter("title");
-		String content = req.getParameter("content");
+		String contentHtml = req.getParameter("contentHtml"); //Html内容
+		String contentMd = req.getParameter("contentMd");  //md内容
 		String categoryId = req.getParameter("categoryId");
 		String checkedTags = req.getParameter("checkedTags");
 		String blogDes = req.getParameter("blogDes");
-		System.out.println("content======"+content);
 		BlogArticle a = new BlogArticle();
 		a.setId(Integer.parseInt(aid));
 		a.setTitle(title);
 		a.setCategoryId(Integer.parseInt(categoryId));
-		a.setContent(content);
+		a.setContentMd(contentMd);
+		a.setContentHtml(contentHtml);
 		a.setBlogDes(blogDes);
 		a.setIsRecommend( req.getParameter("recommend"));
 		
@@ -143,7 +144,8 @@ public class BlogArticleController {
 	public String doAdd(HttpServletRequest req,HttpSession session,final RedirectAttributes redirectAttributes){
 		User u = (User)session.getAttribute("user");  
 		String title = req.getParameter("title");
-		String content = req.getParameter("content");
+		String contentHtml = req.getParameter("contentHtml"); //Html内容
+		String contentMd = req.getParameter("contentMd");  //md内容
 		String categoryId = req.getParameter("categoryId");
 		String checkedTags = req.getParameter("checkedTags");
 		String blogDes = req.getParameter("blogDes");
@@ -152,7 +154,8 @@ public class BlogArticleController {
 		a.setClickCount(0);
 		a.setTitle(title);
 		a.setCategoryId(Integer.parseInt(categoryId));
-		a.setContent(content);
+		a.setContentHtml(contentHtml);
+		a.setContentMd(contentMd);
 		a.setBlogDes(blogDes);
 		a.setIsRecommend( req.getParameter("recommend"));
 		a.setUserId(u.getUserId());

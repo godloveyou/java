@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,8 +39,17 @@ public class IndexController {
 		
 		List<BlogArticle> listArticle = articleService.findByPage(null);
 		mv.addObject("listArticle", listArticle);
+		return mv;
+	}
+	
+	@RequestMapping("/article/{id}")
+	public ModelAndView articleDetail(@PathVariable("id") Integer id){
 		
-		log.info("tagsize: "+listArticle.get(0).getListBlogTags().size());
+		ModelAndView mv = new ModelAndView("/front/article");
+		BlogArticle a = articleService.findDetailById(id);
+		List<BlogCategory> categorys = categorService.findAll();
+		mv.addObject("listCategory", categorys);
+		mv.addObject("article", a);
 		return mv;
 	}
 	

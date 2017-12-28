@@ -24,6 +24,6 @@ public interface BlogArticleDao {
     
     List<BlogArticle> findByPage(BlogArticle blogArticle);
     
-    
+    BlogArticle findDetailById(Integer id);
 
 }

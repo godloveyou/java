@@ -15,14 +15,15 @@
   </resultMap>
   
   <resultMap extends="BaseResultMap"   id="ResultMapWithBLOBs"   type="cn.nilaile.ssm.entity.BlogArticle">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml" />
+    <result column="content_md" jdbcType="LONGVARCHAR" property="contentMd" />
   </resultMap>
   
   <sql id="Base_Column_List">
     id, title, blog_des, click_count, is_recommend, publish_date, category_id, user_id
   </sql>
   <sql id="Blob_Column_List">
-    content
+    content_html,content_md
   </sql>
   
   
@@ -38,53 +39,92 @@
   
   <resultMap id="detailedBlogResultMap"  type="cn.nilaile.ssm.entity.BlogArticle" autoMapping="true">
   	<result column="id" jdbcType="VARCHAR" property="id" />
- 	<result column="title" jdbcType="VARCHAR" property="title" />
+  	<result column="content_html"  jdbcType="LONGVARCHAR" property="contentHtml" />
+  	<result column="conten_md"     jdbcType="LONGVARCHAR"    property="contentMd" />
+ 	<result column="title" 	jdbcType="VARCHAR" property="title" />
     <result column="blog_des" jdbcType="VARCHAR" property="blogDes" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
     <result column="is_recommend" jdbcType="VARCHAR" property="isRecommend" />
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
     
-<!--     <association property="blogCategory" javaType="cn.nilaile.ssm.entity.BlogCategory">
+  <association property="blogCategory" javaType="cn.nilaile.ssm.entity.BlogCategory">
     	<id property="cid" column="cid"/>
 	    <result property="cname" column="cname"/>
     </association>
-    
+   
     <collection property="listBlogTags" ofType="cn.nilaile.ssm.entity.BlogTag" >
-	    <id property="id" column="id"/>
+	    <id property="id"   column="eid"/>
 	    <result property="tagName" column="tag_name"/>
-    </collection> -->
+    </collection>
     
-    
-    <collection property="listBlogComment" ofType="cn.nilaile.ssm.entity.BlogComment">
-	    <id property="id" column="id"/>
+    <collection property="listBlogComment"  ofType="cn.nilaile.ssm.entity.BlogComment">
+	    <id property="id" column="did"/>
 	    <result property="content" column="content"/>
 	    <result property="publishDate" column="publish_date" jdbcType="TIMESTAMP" />
     </collection>
   	
   </resultMap>
   
-  <!-- 查询文章所有标签 -->
-<!--     <select id="findArticleTags"   resultMap="cn.nilaile.ssm.entity.BlogComment"  parameterType="integer" >
-    	select id,article_id from blog_article_tag  where article_id=#{id}
-    </select>
-   -->
+  <resultMap type="cn.nilaile.ssm.entity.BlogArticle"   id="">
+  	
+  </resultMap>
+  
+   
+    <select id="findDetailById"  resultMap="detailedBlogResultMap"  parameterType="integer" >
+  		SELECT
+  			A.id,
+			A.title,
+			A.content_html,
+			'' as content_md,
+			A.blog_des,
+			A.click_count,
+			A.is_recommend,
+			A.publish_date,
+			D.id as did,
+			D.content,
+			D.publish_date,
+			D.user_id,
+			B.cid,
+			B.cname,
+			C.id as cid,
+			E.id as eid,
+			E.tag_name
+		FROM
+			blog_article A
+		LEFT JOIN blog_category B ON A.category_id = b.cid
+		LEFT JOIN blog_comment D ON A.id = D.article_id
+		LEFT JOIN blog_article_tag C ON C.article_id= A.id
+		LEFT JOIN blog_tag E ON E.id = C.tag_id
+		where 
+			A.id=#{id}
+  </select>
+  
   
   <select id="findByPage"  resultMap="detailedBlogResultMap"  parameterType="cn.nilaile.ssm.entity.BlogArticle" >
   		SELECT
   			A.id,
 			A.title,
+			'' as content_html,
+			'' as content_md,
 			A.blog_des,
 			A.click_count,
 			A.is_recommend,
 			A.publish_date,
-			D.id,
+			D.id as did,
 			D.content,
 			D.publish_date,
-			D.user_id
+			D.user_id,
+			B.cid,
+			B.cname,
+			C.id as cid,
+			E.id as eid,
+			E.tag_name
 		FROM
 			blog_article A
 		LEFT JOIN blog_category B ON A.category_id = b.cid
 		LEFT JOIN blog_comment D ON A.id = D.article_id
+		LEFT JOIN blog_article_tag C ON C.article_id= A.id
+		LEFT JOIN blog_tag E ON E.id = C.tag_id
 		<where>
 			    <if test="title != null">A.title  like CONCAT( '%', '${title}',  '%')</if>
 		</where>
@@ -101,11 +141,11 @@
   <insert id="insert"  useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
     insert into blog_article ( title, blog_des, 
       click_count, is_recommend, publish_date, 
-      category_id, user_id, content
+      category_id, user_id, content_html,content_md
       )
     values (#{title,jdbcType=VARCHAR}, #{blogDes,jdbcType=VARCHAR}, 
       #{clickCount,jdbcType=INTEGER}, #{isRecommend,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
-      #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR},#{contentMd,jdbcType=LONGVARCHAR}
       )
   </insert>
   
@@ -136,9 +176,13 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="content != null">
-        content,
+      <if test="contentHtml != null">
+        content_html,
       </if>
+        <if test="contentMd != null">
+        content_md
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="title != null">
@@ -162,8 +206,11 @@
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
+      <if test="contentHtml != null">
+        #{contentHtml,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="contentMd != null">
+        #{contentMd,jdbcType=LONGVARCHAR}
       </if>
     </trim>
   </insert>
@@ -191,9 +238,13 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
+      <if test="contentHtml != null">
+        content_html = #{contentHtml,jdbcType=LONGVARCHAR},
       </if>
+      <if test="contentMd != null">
+        content_md = #{contentMd,jdbcType=LONGVARCHAR}
+      </if>
+      
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -206,7 +257,8 @@
       publish_date = #{publishDate,jdbcType=TIMESTAMP},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
+      content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      content_md = #{contentMd,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogArticle">

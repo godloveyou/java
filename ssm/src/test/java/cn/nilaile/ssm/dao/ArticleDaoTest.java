@@ -41,7 +41,7 @@ public class ArticleDaoTest {
 			BlogArticle b = new BlogArticle();
 			b.setCategoryId(1);
 			b.setTitle("TestTest");
-			b.setContent("This is first blog content");
+			b.setContentHtml("This is first blog content");
 			b.setClickCount(0);
 			b.setBlogDes("blog desc");
 			b.setIsRecommend("1");
@@ -63,6 +63,7 @@ public class ArticleDaoTest {
 		for(int i=0;i<list.size();i++){
 			BlogArticle b = list.get(i);
 			LOG.info("COMMENTS: "+b.getListBlogComment().size());
+			LOG.info("tagNumber: "+b.getListBlogTags().size());
 		}
 	}
 	
@@ -70,7 +71,7 @@ public class ArticleDaoTest {
 	@Ignore
 	public void testFindByArticle(){
 		BlogArticle a = blogArticleDao.selectByPrimaryKey(1);
-		LOG.info("success: "+a.getContent());
+		LOG.info("success: "+a.getContentHtml());
 	}
 	
 	@Test
