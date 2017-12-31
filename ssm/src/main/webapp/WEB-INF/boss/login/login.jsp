@@ -31,7 +31,7 @@
 		    </div>
 		    <div class="layui-form-item form_code">
 				<input class="layui-input"  id="vcode"  name="code" placeholder="验证码" lay-verify="required" type="text" autocomplete="off">
-				<div class="code"><img src="<%=request.getContextPath()%>/validateCode/doGet"  width="146" height="36" id="kaptcha" onclick="this.src='<%=request.getContextPath()%>/validateCode/doGet'"></div>
+				<div class="code"><img src="<%=request.getContextPath()%>/kaptcha/doGet"  width="146" height="36" id="kaptcha" onclick="this.src='<%=request.getContextPath()%>/kaptcha/doGet'"></div>
 		    </div>
 			<button class="layui-btn login_btn" lay-submit="" lay-filter="login">登录</button>
 		</form>

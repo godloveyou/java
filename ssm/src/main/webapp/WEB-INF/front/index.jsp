@@ -31,14 +31,14 @@
     <div class="index-content blog">
     <div class="section">
         <ul class="artical-cate">
-            <li class="on"><a href="/"><span>最新文章</span></a></li>
+            <li class="on"><a href="/"><span>${categoryName }</span></a></li>
         </ul>
 
         <div class="cate-bar"><span id="cateBar"></span></div>
 
         <ul class="artical-list">
 		         <c:forEach var="article" items="${listArticle}">
-		         	<li>
+		         	<li class="post">
 		                <h2><a href="/article/${article.id}">${article.title }</a></h2>
 		                <div class="artical-list-date">
 		                	<span class="timeSpan"><i class="iconfont">&#xe6a9;</i><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></span>
@@ -63,6 +63,15 @@
 
 <script type="text/javascript">
     $(function(){
+    	
+    	 var posts = document.querySelectorAll('.post');
+    	    Array.prototype.forEach.call(posts, function(post, i){
+    	        post.addEventListener('click', function (event) {
+    	            var url = this.querySelector('a').href;
+    	            window.location.href = url;
+    	        });
+    	});
+    	    
     	$(".artical-list li").on({
     		mouseover:function(){
         	    $(this).addClass('myborder');

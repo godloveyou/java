@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nilaile.ssm.dao.BlogLogReqDao">
+  <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogLogReq">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="reqTime" jdbcType="TIMESTAMP" property="reqtime" />
+    <result column="reqIp" jdbcType="VARCHAR" property="reqip" />
+    <result column="reqHead" jdbcType="VARCHAR" property="reqhead" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, reqTime, reqIp, reqHead
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_log_req
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog_log_req
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.nilaile.ssm.entity.BlogLogReq"  useGeneratedKeys="true"  keyProperty="id"  >
+    insert into blog_log_req ( reqTime, reqIp, 
+      reqHead)
+    values ( #{reqtime,jdbcType=TIMESTAMP}, #{reqip,jdbcType=VARCHAR}, 
+      #{reqhead,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogLogReq">
+    insert into blog_log_req
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="reqtime != null">
+        reqTime,
+      </if>
+      <if test="reqip != null">
+        reqIp,
+      </if>
+      <if test="reqhead != null">
+        reqHead,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reqtime != null">
+        #{reqtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqip != null">
+        #{reqip,jdbcType=VARCHAR},
+      </if>
+      <if test="reqhead != null">
+        #{reqhead,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.BlogLogReq">
+    update blog_log_req
+    <set>
+      <if test="reqtime != null">
+        reqTime = #{reqtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqip != null">
+        reqIp = #{reqip,jdbcType=VARCHAR},
+      </if>
+      <if test="reqhead != null">
+        reqHead = #{reqhead,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogLogReq">
+    update blog_log_req
+    set reqTime = #{reqtime,jdbcType=TIMESTAMP},
+      reqIp = #{reqip,jdbcType=VARCHAR},
+      reqHead = #{reqhead,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

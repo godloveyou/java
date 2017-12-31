@@ -97,13 +97,14 @@ public class BlogArticleController {
 	public ModelAndView edit(@PathVariable("id") String id){
 		ModelAndView mv = new ModelAndView("/boss/article/articleEdit");
 		try {
-			BlogArticle article = this.articleService.findById(Integer.parseInt(id));
+			BlogArticle article = this.articleService.findById(id);
 			mv.addObject("article",article);
 			String articleTagIds = IBlogArticleTagService.findArticleTagIds(article.getId());
 			mv.addObject("articleTagIds", articleTagIds);
 		    loadCommonData(mv);
 		} catch (Exception e) {
 			LOG.error("exception-->"+e);
+			e.printStackTrace();
 		}
 		return mv;
 	}
@@ -119,7 +120,7 @@ public class BlogArticleController {
 		String checkedTags = req.getParameter("checkedTags");
 		String blogDes = req.getParameter("blogDes");
 		BlogArticle a = new BlogArticle();
-		a.setId(Integer.parseInt(aid));
+		a.setId(aid);
 		a.setTitle(title);
 		a.setCategoryId(Integer.parseInt(categoryId));
 		a.setContentMd(contentMd);

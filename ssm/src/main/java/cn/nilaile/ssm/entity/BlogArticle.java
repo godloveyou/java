@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BlogArticle {
-    private Integer id;
+    private String id;
 
     private String title;
 
@@ -33,9 +33,22 @@ public class BlogArticle {
     
     private List<BlogComment> listBlogComment;
 
+    private Integer tagId;
     
     
-    public List<BlogComment> getListBlogComment() {
+    
+   
+
+
+	public Integer getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(Integer tagId) {
+		this.tagId = tagId;
+	}
+
+	public List<BlogComment> getListBlogComment() {
 		return listBlogComment;
 	}
 
@@ -61,15 +74,17 @@ public class BlogArticle {
 		this.blogCategory = blogCategory;
 	}
 
-	public Integer getId() {
-        return id;
-    }
+	
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getId() {
+		return id;
+	}
 
-    public String getTitle() {
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
         return title;
     }
 

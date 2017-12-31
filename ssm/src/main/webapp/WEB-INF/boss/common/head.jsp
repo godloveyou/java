@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <div class="layui-header header">
 			<div class="layui-main">
-				<a href="#" class="logo">后台管理</a>
+				<a href="#" class="logo">后台管理</a>
 				<a href="javascript:;" class="iconfont hideMenu icon-menu1"></a>
 				<!-- <div class="layui-form component">
 			        <select name="modules" lay-verify="required" lay-search="">

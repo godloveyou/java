@@ -3,7 +3,7 @@
 <mapper namespace="cn.nilaile.ssm.dao.BlogArticleTagDao">
   <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogArticleTag">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_id" jdbcType="VARCHAR" property="articleId" />
     <result column="tag_id" jdbcType="INTEGER" property="tagId" />
   </resultMap>
     <resultMap type="java.lang.String"  id="stringResult"></resultMap>
@@ -31,19 +31,19 @@
   
 
   
-  <select id="findArticleTagIds"  parameterType="java.lang.Integer" resultMap="stringResult">
+  <select id="findArticleTagIds"  parameterType="java.lang.String" resultMap="stringResult">
     select 
     	GROUP_CONCAT(tag_id) as article_tag_ids
     from blog_article_tag
-    where article_id = #{articleId,jdbcType=INTEGER}
+    where article_id = #{articleId,jdbcType=VARCHAR}
   </select>
   
   
-    <select id="findByArticle" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findByArticle" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from blog_article_tag
-    where article_id = #{aid,jdbcType=INTEGER}
+    where article_id = #{aid,jdbcType=VARCHAR}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -62,7 +62,7 @@
   <insert id="insert"  useGeneratedKeys="true"   parameterType="cn.nilaile.ssm.entity.BlogArticleTag">
     insert into blog_article_tag ( article_id, tag_id
       )
-    values (#{articleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}
+    values (#{articleId,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogArticleTag">
@@ -83,7 +83,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="articleId != null">
-        #{articleId,jdbcType=INTEGER},
+        #{articleId,jdbcType=VARCHAR},
       </if>
       <if test="tagId != null">
         #{tagId,jdbcType=INTEGER},
@@ -94,7 +94,7 @@
     update blog_article_tag
     <set>
       <if test="articleId != null">
-        article_id = #{articleId,jdbcType=INTEGER},
+        article_id = #{articleId,jdbcType=VARCHAR},
       </if>
       <if test="tagId != null">
         tag_id = #{tagId,jdbcType=INTEGER},
@@ -104,7 +104,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogArticleTag">
     update blog_article_tag
-    set article_id = #{articleId,jdbcType=INTEGER},
+    set article_id = #{articleId,jdbcType=VARCHAR},
       tag_id = #{tagId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

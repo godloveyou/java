@@ -10,12 +10,15 @@ public interface IBlogArticleService {
 
 	public void save(BlogArticle a, String checkedTags);
 
-	public BlogArticle findById(int aid);
+	public BlogArticle findById(String id);
 
 	public void update(BlogArticle a, String checkedTags);
 
 	public void delete(String aids);
 
-	public BlogArticle findDetailById(Integer id);
+	public BlogArticle findDetailById(String id);
+
+	public void updateById(BlogArticle a);
 	
+	 void updateClick(BlogArticle a);
 }

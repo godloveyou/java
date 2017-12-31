@@ -3,7 +3,7 @@ package cn.nilaile.ssm.entity;
 public class BlogArticleTag {
     private Integer id;
 
-    private Integer articleId;
+    private String articleId;
 
     private Integer tagId;
 
@@ -15,15 +15,17 @@ public class BlogArticleTag {
         this.id = id;
     }
 
-    public Integer getArticleId() {
-        return articleId;
-    }
+   
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
-    }
+    public String getArticleId() {
+		return articleId;
+	}
 
-    public Integer getTagId() {
+	public void setArticleId(String articleId) {
+		this.articleId = articleId;
+	}
+
+	public Integer getTagId() {
         return tagId;
     }
 

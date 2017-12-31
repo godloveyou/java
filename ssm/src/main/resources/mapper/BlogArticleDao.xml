@@ -4,7 +4,7 @@
 <mapper namespace="cn.nilaile.ssm.dao.BlogArticleDao">
 
   <resultMap id="BaseResultMap" type="cn.nilaile.ssm.entity.BlogArticle">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="blog_des" jdbcType="VARCHAR" property="blogDes" />
     <result column="click_count" jdbcType="INTEGER" property="clickCount" />
@@ -27,12 +27,12 @@
   </sql>
   
   
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />,
      <include refid="Blob_Column_List" />
     from blog_article
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
   
   
@@ -70,10 +70,11 @@
   </resultMap>
   
    
-    <select id="findDetailById"  resultMap="detailedBlogResultMap"  parameterType="integer" >
+    <select id="findDetailById"  resultMap="detailedBlogResultMap"  parameterType="java.lang.String" >
   		SELECT
   			A.id,
 			A.title,
+			A.category_id,
 			A.content_html,
 			'' as content_md,
 			A.blog_des,
@@ -91,7 +92,7 @@
 			E.tag_name
 		FROM
 			blog_article A
-		LEFT JOIN blog_category B ON A.category_id = b.cid
+		LEFT JOIN blog_category B ON A.category_id = B.cid
 		LEFT JOIN blog_comment D ON A.id = D.article_id
 		LEFT JOIN blog_article_tag C ON C.article_id= A.id
 		LEFT JOIN blog_tag E ON E.id = C.tag_id
@@ -109,6 +110,7 @@
 			A.blog_des,
 			A.click_count,
 			A.is_recommend,
+			A.category_id,
 			A.publish_date,
 			D.id as did,
 			D.content,
@@ -117,33 +119,41 @@
 			B.cid,
 			B.cname,
 			C.id as cid,
+			C.tag_id,
 			E.id as eid,
 			E.tag_name
 		FROM
 			blog_article A
-		LEFT JOIN blog_category B ON A.category_id = b.cid
+		LEFT JOIN blog_category B ON A.category_id = B.cid
 		LEFT JOIN blog_comment D ON A.id = D.article_id
 		LEFT JOIN blog_article_tag C ON C.article_id= A.id
 		LEFT JOIN blog_tag E ON E.id = C.tag_id
 		<where>
 			    <if test="title != null">A.title  like CONCAT( '%', '${title}',  '%')</if>
+			    <if test="categoryId != null">A.category_id=#{categoryId}</if>
+			    <if test="tagId != null">C.tag_id=#{tagId}</if>
 		</where>
+	    order by A.publish_date desc
 		
   </select>
   
   
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from blog_article
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert"  useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
-    insert into blog_article ( title, blog_des, 
+  <insert id="insert"    keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
+  <selectKey keyProperty="id" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')   from dual  
+    </selectKey>  
+    
+    insert into blog_article (id, title, blog_des, 
       click_count, is_recommend, publish_date, 
       category_id, user_id, content_html,content_md
       )
-    values (#{title,jdbcType=VARCHAR}, #{blogDes,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{blogDes,jdbcType=VARCHAR}, 
       #{clickCount,jdbcType=INTEGER}, #{isRecommend,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
       #{categoryId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR},#{contentMd,jdbcType=LONGVARCHAR}
       )
@@ -151,7 +161,7 @@
   
   
   
-  <insert id="insertSelective"   useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
+ <!--  <insert id="insertSelective"   useGeneratedKeys="true"  keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
     insert into blog_article
     <trim prefix="(" suffix=")" suffixOverrides=",">
     
@@ -213,8 +223,15 @@
         #{contentMd,jdbcType=LONGVARCHAR}
       </if>
     </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.BlogArticle">
+  </insert> -->
+  
+  <update id="updateClick" parameterType="cn.nilaile.ssm.entity.BlogArticle">
+  	 update blog_article
+  	 	set click_count = #{clickCount,jdbcType=INTEGER}
+  	  where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateById" parameterType="cn.nilaile.ssm.entity.BlogArticle">
     update blog_article
     <set>
       <if test="title != null">
@@ -246,8 +263,9 @@
       </if>
       
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.nilaile.ssm.entity.BlogArticle">
     update blog_article
     set title = #{title,jdbcType=VARCHAR},
@@ -259,8 +277,9 @@
       user_id = #{userId,jdbcType=VARCHAR},
       content_html = #{contentHtml,jdbcType=LONGVARCHAR},
       content_md = #{contentMd,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogArticle">
     update blog_article
     set title = #{title,jdbcType=VARCHAR},
@@ -270,6 +289,19 @@
       publish_date = #{publishDate,jdbcType=TIMESTAMP},
       category_id = #{categoryId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+    <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.BlogArticle">
+    update blog_article
+    set title = #{title,jdbcType=VARCHAR},
+      blog_des = #{blogDes,jdbcType=VARCHAR},
+      is_recommend = #{isRecommend,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=INTEGER},
+       content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+      content_md = #{contentMd,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
 </mapper>

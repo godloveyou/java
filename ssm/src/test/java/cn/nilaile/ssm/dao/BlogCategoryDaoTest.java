@@ -27,13 +27,13 @@ public class BlogCategoryDaoTest {
 	
 	@Test
 	public void testInsert(){
-		String[] list = {"java","php","python","delphi"};
-		for(int i=0;i<list.length;i++){
-			BlogCategory c = new BlogCategory();
-			c.setCname(list[i]);
-			c.setCsort(i);
-			blogCategoryDao.insert(c);
-		}
+//		String[] list = {"java","php","python","delphi"};
+//		for(int i=0;i<list.length;i++){
+//			BlogCategory c = new BlogCategory();
+//			c.setCname(list[i]);
+//			c.setCsort(i);
+//			blogCategoryDao.insert(c);
+//		}
 		
 	}
 

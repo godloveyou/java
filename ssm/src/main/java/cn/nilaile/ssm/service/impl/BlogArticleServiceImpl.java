@@ -41,7 +41,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 	@Override
 	public void save(BlogArticle a,String checkedTags) {
 		//1.保存文章
-		blogArticleDao.insertSelective(a);
+		blogArticleDao.insert(a);
 		
 		//保存文章分类,文章标签
 		List<String> listTagIds = java.util.Arrays.asList(checkedTags.split(","));
@@ -54,7 +54,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 	}
 
 	@Override
-	public BlogArticle findById(int aid) {
+	public BlogArticle findById(String aid) {
 		return blogArticleDao.selectByPrimaryKey(aid);
 	}
 
@@ -90,7 +90,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 		for(int i=0;i<listAids.length;i++){
 			String aid = listAids[i];
 			//查询文章所有标签
-			List<BlogArticleTag> tags = blogArticleTagDao.findByArticle(Integer.parseInt(aid));
+			List<BlogArticleTag> tags = blogArticleTagDao.findByArticle(aid);
 			
 			//删除标签
 			for(int j=0;j<tags.size();j++){
@@ -99,15 +99,25 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 			}
 			
 			//删除文章
-			blogArticleDao.deleteByPrimaryKey(Integer.parseInt(aid));
+			blogArticleDao.deleteByPrimaryKey(aid);
 		}
 		
 	}
 
 	@Override
-	public BlogArticle findDetailById(Integer id) {
+	public BlogArticle findDetailById(String id) {
 		// TODO Auto-generated method stub
 		return blogArticleDao.findDetailById(id);
+	}
+
+	@Override
+	public void updateById(BlogArticle a) {
+		blogArticleDao.updateById(a);
+	}
+	
+	@Override
+	public void updateClick(BlogArticle a) {
+		blogArticleDao.updateClick(a);
 	}
 
 }

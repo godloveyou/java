@@ -41,7 +41,7 @@ layui.config({
 // 			  return false;
 // 		}
  		
- 		$("#articleContent").val(editContent);
+ 		//$("#articleContent").val(editContent);
  		var c = $("#isRecommend").val();
  		if(c && c=='on'){
  			$("#recommend").val("1");

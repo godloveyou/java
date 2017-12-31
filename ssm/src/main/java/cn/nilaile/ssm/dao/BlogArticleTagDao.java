@@ -17,9 +17,9 @@ public interface BlogArticleTagDao {
 
     int updateByPrimaryKey(BlogArticleTag record);
     
-    List<BlogArticleTag> findByArticle(int aid);
+    List<BlogArticleTag> findByArticle(String aid);
 
-	String findArticleTagIds(Integer articleId);
+	String findArticleTagIds(String articleId);
 	
 	void deleteByIds(String[]  articleTagIds);
 

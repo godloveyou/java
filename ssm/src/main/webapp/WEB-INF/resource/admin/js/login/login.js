@@ -14,7 +14,7 @@ layui.config({
 	}).resize();
 	
 	
-	$("#vcode").change(function(){
+/*	$("#vcode").change(function(){
 		var code = $("#vcode").val() || '';
 		var userverificationcoderegex = /^(-{0,1}\d+){1,3}$/;  
 		if(!userverificationcoderegex.test(code)){
@@ -23,17 +23,17 @@ layui.config({
 			return false;
 		}
 	});
-	
+	*/
 	//登录按钮事件
 	form.on("submit(login)",function(data){
 		console.log(JSON.stringify(data));
 		//验证验证码合法性
-		var code = $("#vcode").val() || '';
+	/*	var code = $("#vcode").val() || '';
 		var userverificationcoderegex = /^(-{0,1}\d+){1,3}$/;  
 		if(!userverificationcoderegex.test(code)){
 			layer.msg("验证码不合法");
 			return false;
-		}
+		}*/
 		
 		$.ajax({
 			url:'/boss/doLogin',dataType:'json',type:'post',
@@ -43,7 +43,7 @@ layui.config({
 					layer.msg(data.msg);
 					window.location.href = "/boss/index";
 				}else{
-					$("#kaptcha").attr('src',"/validateCode/doGet");
+					$("#kaptcha").attr('src',"/kaptcha/doGet");
 					layer.msg(data.msg);
 				}
 			}

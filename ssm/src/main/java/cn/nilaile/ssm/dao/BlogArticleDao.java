@@ -8,13 +8,12 @@ import org.apache.ibatis.annotations.Param;
 import cn.nilaile.ssm.entity.BlogArticle;
 
 public interface BlogArticleDao {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(BlogArticle record);
 
-    int insertSelective(BlogArticle record);
 
-    BlogArticle selectByPrimaryKey(Integer id);
+    BlogArticle selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(BlogArticle record);
 
@@ -24,6 +23,10 @@ public interface BlogArticleDao {
     
     List<BlogArticle> findByPage(BlogArticle blogArticle);
     
-    BlogArticle findDetailById(Integer id);
+    BlogArticle findDetailById(String id);
+
+	void updateById(BlogArticle a);
+	
+	void updateClick(BlogArticle a);
 
 }

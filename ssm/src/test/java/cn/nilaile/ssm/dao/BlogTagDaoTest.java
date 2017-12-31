@@ -27,12 +27,12 @@ public class BlogTagDaoTest {
 	
 	@Test
 	public void testInsert(){
-		String[] tags = {"spring","struts2","hibernate"};
-		for(int i=0;i<tags.length;i++){
-			BlogTag t = new BlogTag();
-			t.setTagName(tags[i]);
-			blogTagDao.insert(t);
-		}
+//		String[] tags = {"spring","struts2","hibernate"};
+//		for(int i=0;i<tags.length;i++){
+//			BlogTag t = new BlogTag();
+//			t.setTagName(tags[i]);
+//			blogTagDao.insert(t);
+//		}
 		
 		
 	}

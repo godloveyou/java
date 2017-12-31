@@ -29,7 +29,7 @@ public class UserDaoTest {
 		User u = new User();
 		u.setUserName("admin");
 		try {
-			u.setPassword(Md5SaltUtil.getEncryptedPwd("123456"));
+			u.setPassword(Md5SaltUtil.getEncryptedPwd("david208970"));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -39,8 +39,9 @@ public class UserDaoTest {
 		u.setLastLogin(new java.util.Date());
 		u.setIsActive(CommonEnum.ACTIVE_YES.getValue());
 		u.setIsStaff(CommonEnum.STAFF_YES.getValue());
+		System.out.println(u.getPassword());
 		int m = userDao.insert(u);
-		LOG.info("记录数:"+m);
+		//LOG.info("记录数:"+m);
 	}
 
 }

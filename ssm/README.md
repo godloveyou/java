@@ -21,6 +21,12 @@
 3.点击run
 
 
+maven自动化部署到远程服务器方法
+http://xxgblog.com/2015/10/23/wagon-maven-plugin/#
+
+scp://root:%100.RuiRui@113.209.26.17/usr/local/apache-tomcat-7.0.67/webapps
+package wagon:upload-single wagon:sshexec
+
 ##Mybatis配置运行方式##
 https://www.cnblogs.com/gosky/p/5518748.html
 命令： mybatis-generator:generate  -e  加了“-e ”是为了让该插件输出详细信息，这样可以定位问题

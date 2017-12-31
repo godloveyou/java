@@ -10,33 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.nilaile.ssm.dao.BlogArticleDao;
 import cn.nilaile.ssm.dao.BlogArticleTagDao;
+import cn.nilaile.ssm.dao.BlogLogReqDao;
 import cn.nilaile.ssm.entity.BlogArticle;
 import cn.nilaile.ssm.entity.BlogArticleTag;
+import cn.nilaile.ssm.entity.BlogLogReq;
 import cn.nilaile.ssm.service.IBlogArticleService;
 import cn.nilaile.ssm.service.IBlogArticleTagService;
+import cn.nilaile.ssm.service.IBlogLogReqService;
 
 @Service
-public class BlogArticleTagServiceImpl implements IBlogArticleTagService{
+public class BlogLogReqServiceImpl implements IBlogLogReqService{
 
 	@Autowired
-	BlogArticleDao blogArticleDao;
-	
-
-	@Autowired
-	BlogArticleTagDao blogArticleTagDao;
+	BlogLogReqDao blogLogReqDao;
 	
 	@Override
-	public List<BlogArticleTag> findByArticle(String aid) {
-		return blogArticleTagDao.findByArticle(aid);
+	public int insert(BlogLogReq record) {
+		return blogLogReqDao.insert(record);
 	}
-
-	@Override
-	public String findArticleTagIds(String articleId) {
-		// TODO Auto-generated method stub
-		return blogArticleTagDao.findArticleTagIds(articleId);
-	}
-	
-
 
 
 }

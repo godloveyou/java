@@ -25,6 +25,7 @@ public class BlogCategoryServiceImpl implements IBlogCategoryService{
 		return blogCategoryDao.findAll();
 	}
 
+	@Transactional
 	@Override
 	public void delete(String ids) {
 		 String[] idArray = ids.split(",");
