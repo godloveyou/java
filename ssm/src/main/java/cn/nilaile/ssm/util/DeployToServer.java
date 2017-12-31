@@ -21,11 +21,11 @@ import ch.ethz.ssh2.StreamGobbler;
 public class DeployToServer {
 
 	  //数据服务器的ip地址  
-    private static String dataServerIp = "113.209.26.17";  
+    private static String dataServerIp = "";  
     //数据服务器的用户名  
-    private static String dataServerUsername = "root";  
+    private static String dataServerUsername = "";  
     //数据服务器的密码  
-    private static String dataServerPassword = "%100.RuiRui";  
+    private static String dataServerPassword = "";  
     //数据服务器的目的文件夹  
     private static String dataServerDestDir = "/usr/local/apache-tomcat-7.0.67/webapps";  
     

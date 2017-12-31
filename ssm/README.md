@@ -12,9 +12,6 @@
 - 统一的异常处理
 - JSP JSTL JavaScript
 
-###**架构图：**
-![](http://i.imgur.com/vc6iu0X.png)
-
 ### Maven项目运行方式##
 1.RUN AS-->RUN Configuration-->
 2.Goals-->输入tomcat:run
@@ -24,7 +21,7 @@
 maven自动化部署到远程服务器方法
 http://xxgblog.com/2015/10/23/wagon-maven-plugin/#
 
-scp://root:%100.RuiRui@113.209.26.17/usr/local/apache-tomcat-7.0.67/webapps
+scp://用户名:密码@ip/usr/local/apache-tomcat-7.0.67/webapps
 package wagon:upload-single wagon:sshexec
 
 ##Mybatis配置运行方式##
