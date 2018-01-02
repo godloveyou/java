@@ -4,15 +4,14 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Blog Index</title>
+    <title>首页</title>
     <meta name="author" content="Mukosame" />
     <meta name="renderer" content="webkit">
     <meta name="description" content="Everything about Mukosame" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="/css/default.css" type="text/css" />
+    <%@include file="common/header.jsp"%>
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
     <link rel="shortcut icon" href="/front/favicon.ico" type="image/x-icon" />
-    <script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 </head>
 <body>
 

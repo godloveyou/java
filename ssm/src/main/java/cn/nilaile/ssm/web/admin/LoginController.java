@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.code.kaptcha.Constants;
 
@@ -74,6 +75,11 @@ public class LoginController {
 				return new BaseResult<Object>(false, ResultEnum.INVALID_USER.getMsg());
 			}
 			session.setAttribute("user", u);
+			User u2 = new User();
+			u2.setLastLogin(new java.util.Date());
+			u2.setUserId(u.getUserId());
+			userService.updateByProper(u2);
+			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			 return new BaseResult<Object>(false, ResultEnum.INNER_ERROR.getMsg());
 		}
@@ -82,9 +88,38 @@ public class LoginController {
 	}
 
 	
+	@RequestMapping("/toChangePwd")
+	public ModelAndView toChangePwd(ModelAndView v,HttpSession session){
+		v.setViewName("/boss/user/changePwd");
+		User u = (User) session.getAttribute("user");
+		u.setPassword("");
+		v.addObject("user", u);
+		return v;
+	}
 	
 	
-	
+	@RequestMapping(path="/changePwd",method=RequestMethod.POST)
+	@ResponseBody
+	public BaseResult<Object> changePwd(@RequestParam(value = "oldPwd") String oldPwd,@RequestParam(value = "pwd") String pwd,@RequestParam(value = "username") String username){
+		
+		User u = userService.login(username);
+		
+		try {
+			if(!Md5SaltUtil.validPassword(oldPwd, u.getPassword())){
+				return new BaseResult<Object>(false, "原密码错误");
+			}
+			User u2 = new User();
+			u2.setUserId(u.getUserId());
+			u2.setPassword(Md5SaltUtil.getEncryptedPwd(pwd));
+			userService.updateByProper(u2);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			 return new BaseResult<Object>(false,"修改失败[系统繁忙]");
+		}
+		
+		 return new BaseResult<Object>(true,"修改成功");
+	}
 	
 	
 	

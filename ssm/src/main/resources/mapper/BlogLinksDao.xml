@@ -11,22 +11,42 @@
   <sql id="Base_Column_List">
     id, title, description, callback_url, publish_date
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from blog_links
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
+  <select id="findByName"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_links
+    where title = #{title,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="findAll"   resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_links
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blog_links
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="cn.nilaile.ssm.entity.BlogLinks">
     insert into blog_links (id, title, description, 
       callback_url, publish_date)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{callbackUrl,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP})
   </insert>
+  
   <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogLinks">
     insert into blog_links
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -82,6 +102,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogLinks">
     update blog_links
     set title = #{title,jdbcType=VARCHAR},
@@ -90,4 +111,6 @@
       publish_date = #{publishDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
 </mapper>

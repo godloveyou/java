@@ -8,4 +8,6 @@ public interface IUserService {
 	public User findByUserName(String username);
 	public User findByMobile(String mobile);
 	
+	public void updateByProper(User u);
+	
 }

@@ -34,7 +34,6 @@ layui.config({
 			layer.msg("验证码不合法");
 			return false;
 		}*/
-		
 		$.ajax({
 			url:'/boss/doLogin',dataType:'json',type:'post',
 			data:{'username':data.field.username,'password':data.field.password,"vcode":data.field.code},

@@ -33,6 +33,11 @@ public class UserServiceImpl implements IUserService{
 		
 		return this.findByUserName(username);
 	}
+
+	@Override
+	public void updateByProper(User u) {
+		userDao.updateByPrimaryKeySelective(u);
+	}
 	
 
 }
