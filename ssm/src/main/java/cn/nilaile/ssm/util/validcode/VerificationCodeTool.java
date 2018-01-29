@@ -32,13 +32,13 @@ public class VerificationCodeTool {
 	    //static final font : In Chinese characters garbled  
 	    private final Font font = new Font("黑体", Font.BOLD, 18);  
 	    //data operator  
-	    private static final Map<String, Integer> OPMap = new HashMap<String, Integer>();  
+	    private static final Map<String, Integer> OPMAP = new HashMap<String, Integer>();  
 	      
 	    static{  
-	        OPMap.put("*", 11);  
-	        OPMap.put("/", 12);  
-	        OPMap.put("+", 13);  
-	        OPMap.put("-", 14);  
+	        OPMAP.put("*", 11);  
+	        OPMAP.put("/", 12);  
+	        OPMAP.put("+", 13);  
+	        OPMAP.put("-", 14);  
 	    }  
 	    
 	    
@@ -78,7 +78,7 @@ public class VerificationCodeTool {
 	        for(int j=0,k = randomString.length(); j < k; j++){  
 	          int chid = 0;  
 	          if(j==1){  
-	              chid = OPMap.get(String.valueOf(randomString.charAt(j)));  
+	              chid = OPMAP.get(String.valueOf(randomString.charAt(j)));  
 	          }else{  
 	              chid = Integer.parseInt(String.valueOf(randomString.charAt(j)));  
 	          }  

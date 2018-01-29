@@ -7,15 +7,15 @@ import cn.nilaile.ssm.entity.BlogCategory;
 import cn.nilaile.ssm.entity.BlogTag;
 
 public interface IBlogTagService {
-	public List<BlogTag> findAll();
+	public List<BlogTag> list();
 
-	public BlogTag findById(Integer id);
+	public BlogTag getById(Integer id);
 
 	public void update(BlogTag articleTag);
 
-	public void delete(String tagIds);
+	public void remove(String tagIds);
 
-	public BlogTag findByName(String tagname);
+	public BlogTag getByName(String tagname);
 
 	public int save(BlogTag t);
 

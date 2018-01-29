@@ -17,13 +17,13 @@ public class BlogLinksServiceImpl implements IBlogLinksService{
 	BlogLinksDao bloglinksDao;
 
 	@Override
-	public List<BlogLinks> findAll() {
+	public List<BlogLinks> list() {
 		return bloglinksDao.findAll();
 	}
 
 	@Transactional
 	@Override
-	public void delete(String ids) {
+	public void remove(String ids) {
 		 String[] idArray = ids.split(",");
 		 for(int i=0;i<idArray.length;i++){
 			 bloglinksDao.deleteByPrimaryKey(Integer.parseInt(idArray[i]));
@@ -31,7 +31,7 @@ public class BlogLinksServiceImpl implements IBlogLinksService{
 	}
 
 	@Override
-	public BlogLinks findById(Integer id) {
+	public BlogLinks getById(Integer id) {
 		return bloglinksDao.selectByPrimaryKey(id);
 	}
 
@@ -41,7 +41,7 @@ public class BlogLinksServiceImpl implements IBlogLinksService{
 	}
 
 	@Override
-	public BlogLinks findByName(String cname) {
+	public BlogLinks getByName(String cname) {
 		
 		return bloglinksDao.findByName(cname);
 	}

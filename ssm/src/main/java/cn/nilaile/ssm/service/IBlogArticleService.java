@@ -6,17 +6,17 @@ import cn.nilaile.ssm.entity.BlogArticle;
 
 public interface IBlogArticleService {
 
-	public List<BlogArticle> findByPage(BlogArticle article);
+	public List<BlogArticle> list(BlogArticle article);
 
 	public void save(BlogArticle a, String checkedTags);
 
-	public BlogArticle findById(String id);
+	public BlogArticle getById(String id);
 
 	public void update(BlogArticle a, String checkedTags);
 
-	public void delete(String aids);
+	public void remove(String aids);
 
-	public BlogArticle findDetailById(String id);
+	public BlogArticle getDetailById(String id);
 
 	public void updateById(BlogArticle a);
 	

@@ -12,6 +12,21 @@
 - 统一的异常处理
 - JSP JSTL JavaScript
 
+# service/dao命名规范
+-  获取单个对象的方法用get 做前缀
+-  获取多个对象的方法用list做前缀
+-  获取统计值的方法用count做前缀
+-  插入方法用insert做前缀
+-  删除方法用delete做前缀
+- 更新方法用update做前缀
+
+
+# 前端使用的组件
+- Markdown编辑器 Editor.md  https://github.com/pandao/editor.md
+- zheng.jtotop.js 返回顶部或指定位置 https://github.com/shuzheng/zheng.jtotop.js
+- 邮箱地址自动补全 autoMail 	https://github.com/shuzheng/autoMail
+
+
 ### Maven项目运行方式##
 1.RUN AS-->RUN Configuration-->
 2.Goals-->输入tomcat:run

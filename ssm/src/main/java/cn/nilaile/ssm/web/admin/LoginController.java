@@ -65,7 +65,7 @@ public class LoginController {
 			return new BaseResult<Object>(false, "用户名或密码为空");
 		}
 
-		User u = userService.login(username);
+		User u = userService.getByUserNameOrMobile(username);
 		if (null == u) {
 			return new BaseResult<Object>(false, "用户名或密码错误");
 		}
@@ -102,7 +102,7 @@ public class LoginController {
 	@ResponseBody
 	public BaseResult<Object> changePwd(@RequestParam(value = "oldPwd") String oldPwd,@RequestParam(value = "pwd") String pwd,@RequestParam(value = "username") String username){
 		
-		User u = userService.login(username);
+		User u = userService.getByUserNameOrMobile(username);
 		
 		try {
 			if(!Md5SaltUtil.validPassword(oldPwd, u.getPassword())){

@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <!-- <link rel="stylesheet" href="/css/default.css" type="text/css" /> -->
      <%@include file="common/header.jsp"%>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="/js/prettify/prettify.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/editormd/css/editormd.css" media="all" />
 	

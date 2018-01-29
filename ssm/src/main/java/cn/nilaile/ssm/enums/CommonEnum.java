@@ -2,6 +2,9 @@ package cn.nilaile.ssm.enums;
 
 public enum CommonEnum {
 
+	/**
+	 * 用户激活状态
+	 */
 	ACTIVE_NOT("未激活","2001"),
 	ACTIVE_YES("激活","2002"),
 	STAFF_YES("是管理","1001"),

@@ -29,7 +29,7 @@ public class BlogLinksController {
 	
 	@RequestMapping(value="/delete/{ids}") 
 	public String delete(@PathVariable("ids") String ids, final RedirectAttributes redirectAttributes){
-		iBlogLinksService.delete(ids);
+		iBlogLinksService.remove(ids);
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
 		return "redirect:/boss/links/list";
 	}
@@ -45,7 +45,7 @@ public class BlogLinksController {
 		curr = curr==null?1:curr;
 		ModelAndView mv = new ModelAndView("/boss/links/list");
 		PageHelper.startPage(curr, 30);
-		List<BlogLinks> list = iBlogLinksService.findAll();
+		List<BlogLinks> list = iBlogLinksService.list();
 		//用PageInfo对结果进行包装
 		PageInfo<BlogLinks> page = new PageInfo<BlogLinks>(list);
 		mv.addObject("list", list);
@@ -61,7 +61,7 @@ public class BlogLinksController {
 	public ModelAndView edit(@PathVariable("id") Integer id){
 		ModelAndView mv = new ModelAndView("/boss/links/edit");
 		try {
-			BlogLinks tag = iBlogLinksService.findById(id);
+			BlogLinks tag = iBlogLinksService.getById(id);
 			mv.addObject("links",tag);
 		} catch (Exception e) {
 			LOG.error("exception-->"+e);
@@ -73,7 +73,7 @@ public class BlogLinksController {
 	@RequestMapping(value = "/doEdit",method = RequestMethod.POST)
 	public String doEdit(HttpServletRequest req,final RedirectAttributes redirectAttributes){
 		String id = req.getParameter("id");
-		BlogLinks links = iBlogLinksService.findById(Integer.parseInt(id));
+		BlogLinks links = iBlogLinksService.getById(Integer.parseInt(id));
 		links.setCallbackUrl(req.getParameter("callbackUrl"));
 		links.setDescription(req.getParameter("description"));
 		links.setPublishDate(new java.util.Date());
@@ -94,7 +94,7 @@ public class BlogLinksController {
 	@RequestMapping("/doAdd")
 	public String doAdd(HttpServletRequest req,final RedirectAttributes redirectAttributes){
 		//判断是否存在
-		BlogLinks t = iBlogLinksService.findByName(req.getParameter("title"));
+		BlogLinks t = iBlogLinksService.getByName(req.getParameter("title"));
 		
 		if(null!=t){
 			redirectAttributes.addFlashAttribute("msg", "添加失败【已存在】");

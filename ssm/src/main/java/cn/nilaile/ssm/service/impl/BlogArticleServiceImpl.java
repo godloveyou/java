@@ -33,15 +33,15 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 	IBlogArticleTagService iBlogArticleTagService;
 	
 	@Override
-	public List<BlogArticle> findByPage(BlogArticle article) {
-		return blogArticleDao.findByPage(article);
+	public List<BlogArticle> list(BlogArticle article) {
+		return blogArticleDao.list(article);
 	}
 
 	@Transactional
 	@Override
 	public void save(BlogArticle a,String checkedTags) {
 		//1.保存文章
-		blogArticleDao.insert(a);
+		blogArticleDao.save(a);
 		
 		//保存文章分类,文章标签
 		List<String> listTagIds = java.util.Arrays.asList(checkedTags.split(","));
@@ -54,8 +54,8 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 	}
 
 	@Override
-	public BlogArticle findById(String aid) {
-		return blogArticleDao.selectByPrimaryKey(aid);
+	public BlogArticle getById(String aid) {
+		return blogArticleDao.getById(aid);
 	}
 
 	
@@ -66,7 +66,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 		blogArticleDao.updateByPrimaryKeySelective(a);
 		
 		//更新标签(删除原始标签+更新为新的标签)
-		List<BlogArticleTag> listBlogArticle = iBlogArticleTagService.findByArticle(a.getId());
+		List<BlogArticleTag> listBlogArticle = iBlogArticleTagService.getByAid(a.getId());
 		for (BlogArticleTag blogArticleTag : listBlogArticle) {
 			blogArticleTagDao.deleteByPrimaryKey(blogArticleTag.getId());
 		}
@@ -85,7 +85,7 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 
 	@Transactional
 	@Override
-	public void delete(String aids) {
+	public void remove(String aids) {
 		String[] listAids = aids.split(",");
 		for(int i=0;i<listAids.length;i++){
 			String aid = listAids[i];
@@ -99,15 +99,14 @@ public class BlogArticleServiceImpl implements IBlogArticleService{
 			}
 			
 			//删除文章
-			blogArticleDao.deleteByPrimaryKey(aid);
+			blogArticleDao.removeById(aid);
 		}
 		
 	}
 
 	@Override
-	public BlogArticle findDetailById(String id) {
-		// TODO Auto-generated method stub
-		return blogArticleDao.findDetailById(id);
+	public BlogArticle getDetailById(String id) {
+		return blogArticleDao.getDetailById(id);
 	}
 
 	@Override

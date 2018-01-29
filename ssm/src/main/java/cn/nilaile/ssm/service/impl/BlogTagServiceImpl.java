@@ -25,12 +25,13 @@ public class BlogTagServiceImpl implements IBlogTagService{
 	@Autowired
 	BlogArticleTagDao blogArticleTagDao;
 	
-	public List<BlogTag> findAll(){
+	@Override
+	public List<BlogTag> list(){
 		return blogTagDao.findAll();
 	}
 	
 	@Override
-	public BlogTag findById(Integer id) {
+	public BlogTag getById(Integer id) {
 		return blogTagDao.selectByPrimaryKey(id);
 	}
 
@@ -41,7 +42,7 @@ public class BlogTagServiceImpl implements IBlogTagService{
 
 	@Transactional
 	@Override
-	public void delete(String tagIds) {
+	public void remove(String tagIds) {
 		String[] tagIdArray = tagIds.split(",");
 		for(int i=0;i<tagIdArray.length;i++){
 			String tagId = tagIdArray[i];
@@ -54,7 +55,7 @@ public class BlogTagServiceImpl implements IBlogTagService{
 	}
 
 	@Override
-	public BlogTag findByName(String tagname) {
+	public BlogTag getByName(String tagname) {
 		return blogTagDao.findByName(tagname);
 	}
 

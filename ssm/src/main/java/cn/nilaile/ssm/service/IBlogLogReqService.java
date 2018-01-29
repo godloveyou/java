@@ -4,6 +4,6 @@ import cn.nilaile.ssm.entity.BlogLogReq;
 
 public interface IBlogLogReqService {
 
-	  int insert(BlogLogReq record);
+	  int save(BlogLogReq record);
 	
 }

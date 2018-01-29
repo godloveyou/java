@@ -11,22 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <%@include file="common/header.jsp"%>
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
-    <link rel="shortcut icon" href="/front/favicon.ico" type="image/x-icon" />
 </head>
 <body>
-
-   <!-- <div class="home-menu">
-        <div class="home-icon-con">
-            <a class="home-menu-icon" href="/">Mukosame</a>
-            <a class="home-follow" href="#" title="Contact Me">+</a>
-        </div>
-        <div class="home-contact">
-            <a href="https://github.com/Mukosame/" target="_blank" style="margin-left:-5px;"><img src="https://github.com/favicon.ico" alt="" width="22"/></a>
-            <a href="http://www.douban.com/people/23026489/" target="_blank" style="text-align:center;"><img src="http://www.douban.com/favicon.ico" alt="" width="22"/></a>
-            <a href="http://www.zhihu.com/people/xiang-xiao-yu-20" target="_blank" style="text-align:right"><img src="http://www.zhihu.com/favicon.ico" alt="" width="22"/></a>
-        </div>
-    </div> -->
-
     <div class="index-content blog">
     <div class="section">
         <ul class="artical-cate">
@@ -42,7 +28,9 @@
 		                <div class="artical-list-date">
 		                	<span class="timeSpan"><i class="iconfont">&#xe6a9;</i><fmt:formatDate value="${article.publishDate}" pattern="yyyy-MM-dd HH:mm"/></span>
 		                	<span class="viewCount"><i class="iconfont">&#xe618;</i>${article. clickCount}</span>
-		                	<span class="commentsCount"><i class="iconfont">&#xe67e;</i>${fn:length(article.listBlogComment) }</span>
+		                	<i class="iconfont">&#xe67e;</i><span id = "sourceId::${article.id}" class = "cy_cmt_count" ></span>
+							<script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyto4vUae">
+							</script>
 		                </div>
 		                <div class="title-desc">${article.blogDes }</div>
 		                <div class="line"></div>

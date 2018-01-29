@@ -21,11 +21,11 @@ import ch.ethz.ssh2.StreamGobbler;
 public class DeployToServer {
 
 	  //数据服务器的ip地址  
-    private static String dataServerIp = "";  
+    private static String dataServerIp = "113.209.26.17";  
     //数据服务器的用户名  
-    private static String dataServerUsername = "";  
+    private static String dataServerUsername = "root";  
     //数据服务器的密码  
-    private static String dataServerPassword = "";  
+    private static String dataServerPassword = "%100.RuiRui";  
     //数据服务器的目的文件夹  
     private static String dataServerDestDir = "/usr/local/apache-tomcat-7.0.67/webapps";  
     
@@ -51,16 +51,18 @@ public class DeployToServer {
 	        conn.connect();  
 	        boolean isAuthenticated = conn.authenticateWithPassword(dataServerUsername, dataServerPassword);  
 	        
-	        if (isAuthenticated == false)  
-	            throw new IOException("Authentication failed.文件scp到数据服务器时发生异常");  
+	        if (isAuthenticated == false) {
+	        	   throw new IOException("Authentication failed.文件scp到数据服务器时发生异常");  
+	        }
+	         
 	        
 	        SCPClient client = new SCPClient(conn);  
 	        client.put("F:/david/git/ssm/ssm/target/blogforjava.war", dataServerDestDir); //本地文件scp到远程目录  
 	       // client.get(dataServerDestDir + "00审计.zip", localDir);//远程的文件scp到本地目录  
 	        
-	    	Session sess = conn.openSession();
-			sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/shutdown.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
-			sess.close();
+//	    	Session sess = conn.openSession();
+//			sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/shutdown.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
+//			sess.close();
 			
 	        conn.close();  
 	    } catch (IOException e) {  

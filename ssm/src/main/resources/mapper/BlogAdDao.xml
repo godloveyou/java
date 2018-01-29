@@ -10,20 +10,26 @@
     <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate" />
     <result column="sort_index" jdbcType="SMALLINT" property="sortIndex" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     id, title, description, image_url, callback_url, publish_date, sort_index
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from blog_ad
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  
+  
+  <delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
     delete from blog_ad
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.nilaile.ssm.entity.BlogAd">
+  
+  
+  <insert id="save" parameterType="cn.nilaile.ssm.entity.BlogAd">
     insert into blog_ad (id, title, description, 
       image_url, callback_url, publish_date, 
       sort_index)
@@ -31,7 +37,10 @@
       #{imageUrl,jdbcType=VARCHAR}, #{callbackUrl,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
       #{sortIndex,jdbcType=SMALLINT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.nilaile.ssm.entity.BlogAd">
+  
+  
+  
+  <insert id="saveSelective" parameterType="cn.nilaile.ssm.entity.BlogAd">
     insert into blog_ad
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -80,6 +89,9 @@
       </if>
     </trim>
   </insert>
+  
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="cn.nilaile.ssm.entity.BlogAd">
     update blog_ad
     <set>
@@ -104,6 +116,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  
   <update id="updateByPrimaryKey" parameterType="cn.nilaile.ssm.entity.BlogAd">
     update blog_ad
     set title = #{title,jdbcType=VARCHAR},

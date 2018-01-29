@@ -31,7 +31,7 @@ public class BlogTagController {
 	
 	@RequestMapping(value="/delete/{tagIds}") 
 	public String delete(@PathVariable("tagIds") String tagIds, final RedirectAttributes redirectAttributes){
-		iBlogTagService.delete(tagIds);
+		iBlogTagService.remove(tagIds);
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
 		return "redirect:/boss/articleTag/list";
 	}
@@ -47,7 +47,7 @@ public class BlogTagController {
 		curr = curr==null?1:curr;
 		ModelAndView mv = new ModelAndView("/boss/articleTag/list");
 		PageHelper.startPage(curr, 30);
-		List<BlogTag> list = iBlogTagService.findAll();
+		List<BlogTag> list = iBlogTagService.list();
 		//用PageInfo对结果进行包装
 		PageInfo<BlogTag> page = new PageInfo<BlogTag>(list);
 		mv.addObject("list", list);
@@ -63,7 +63,7 @@ public class BlogTagController {
 	public ModelAndView edit(@PathVariable("id") Integer id){
 		ModelAndView mv = new ModelAndView("/boss/articleTag/edit");
 		try {
-			BlogTag tag = iBlogTagService.findById(id);
+			BlogTag tag = iBlogTagService.getById(id);
 			mv.addObject("articleTag",tag);
 		} catch (Exception e) {
 			LOG.error("exception-->"+e);
@@ -76,7 +76,7 @@ public class BlogTagController {
 	public String doEdit(HttpServletRequest req,final RedirectAttributes redirectAttributes){
 		String id = req.getParameter("id");
 		String tagname = req.getParameter("tagName");
-		BlogTag articleTag = iBlogTagService.findById(Integer.parseInt(id));
+		BlogTag articleTag = iBlogTagService.getById(Integer.parseInt(id));
 		if(!articleTag.getTagName().equals(tagname)){
 			articleTag.setTagName(tagname);
 			iBlogTagService.update(articleTag);
@@ -96,7 +96,7 @@ public class BlogTagController {
 	@RequestMapping("/doAdd")
 	public String doAdd(String tagName,final RedirectAttributes redirectAttributes){
 		//判断是否存在
-		BlogTag t = iBlogTagService.findByName(tagName);
+		BlogTag t = iBlogTagService.getByName(tagName);
 		if(null!=t){
 			redirectAttributes.addFlashAttribute("msg", "添加失败【标签已存在】");
 			return "redirect:/boss/articleTag/list"; 

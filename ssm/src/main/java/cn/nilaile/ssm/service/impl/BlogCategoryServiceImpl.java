@@ -21,13 +21,13 @@ public class BlogCategoryServiceImpl implements IBlogCategoryService{
 	BlogCategoryDao blogCategoryDao;
 
 	@Override
-	public List<BlogCategory> findAll() {
+	public List<BlogCategory> list() {
 		return blogCategoryDao.findAll();
 	}
 
 	@Transactional
 	@Override
-	public void delete(String ids) {
+	public void remove(String ids) {
 		 String[] idArray = ids.split(",");
 		 for(int i=0;i<idArray.length;i++){
 			 blogCategoryDao.deleteByPrimaryKey(Integer.parseInt(idArray[i]));
@@ -35,7 +35,7 @@ public class BlogCategoryServiceImpl implements IBlogCategoryService{
 	}
 
 	@Override
-	public BlogCategory findById(Integer id) {
+	public BlogCategory getById(Integer id) {
 		return blogCategoryDao.selectByPrimaryKey(id);
 	}
 
@@ -45,7 +45,7 @@ public class BlogCategoryServiceImpl implements IBlogCategoryService{
 	}
 
 	@Override
-	public BlogCategory findByName(String cname) {
+	public BlogCategory getByName(String cname) {
 		
 		return blogCategoryDao.findByName(cname);
 	}

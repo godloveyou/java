@@ -15,23 +15,23 @@ public class UserServiceImpl implements IUserService{
 	UserDao userDao;
 	
 	@Override
-	public User findByUserName(String username) {
+	public User getByUserName(String username) {
 		
 		return userDao.findByUserName(username);
 	}
 
 	@Override
-	public User findByMobile(String mobile) {
+	public User getByMobile(String mobile) {
 		return userDao.findByMobile(mobile);
 	}
 
 	@Override
-	public User login(String username) {
+	public User getByUserNameOrMobile(String username) {
 		if(AccountValidatorUtil.isMobile(username)){
-			return this.findByMobile(username);
+			return this.getByMobile(username);
 		}
 		
-		return this.findByUserName(username);
+		return this.getByUserName(username);
 	}
 
 	@Override

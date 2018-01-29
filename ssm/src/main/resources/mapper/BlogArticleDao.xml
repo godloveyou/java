@@ -27,7 +27,7 @@
   </sql>
   
   
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="getById" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />,
      <include refid="Blob_Column_List" />
@@ -70,7 +70,7 @@
   </resultMap>
   
    
-    <select id="findDetailById"  resultMap="detailedBlogResultMap"  parameterType="java.lang.String" >
+    <select id="getDetailById"  resultMap="detailedBlogResultMap"  parameterType="java.lang.String" >
   		SELECT
   			A.id,
 			A.title,
@@ -101,7 +101,7 @@
   </select>
   
   
-  <select id="findByPage"  resultMap="detailedBlogResultMap"  parameterType="cn.nilaile.ssm.entity.BlogArticle" >
+  <select id="list"  resultMap="detailedBlogResultMap"  parameterType="cn.nilaile.ssm.entity.BlogArticle" >
   		SELECT
   			A.id,
 			A.title,
@@ -139,12 +139,12 @@
   
   
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="removeById" parameterType="java.lang.String">
     delete from blog_article
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert"    keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
+  <insert id="save"    keyProperty="id"  parameterType="cn.nilaile.ssm.entity.BlogArticle">
   <selectKey keyProperty="id" resultType="String" order="BEFORE">  
         select  replace(uuid(),'-','')   from dual  
     </selectKey>  

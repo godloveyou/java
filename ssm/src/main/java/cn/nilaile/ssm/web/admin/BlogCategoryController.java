@@ -29,7 +29,7 @@ public class BlogCategoryController {
 	
 	@RequestMapping(value="/delete/{ids}") 
 	public String delete(@PathVariable("ids") String ids, final RedirectAttributes redirectAttributes){
-		blogCategoryService.delete(ids);
+		blogCategoryService.remove(ids);
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
 		return "redirect:/boss/articleCategory/list";
 	}
@@ -45,7 +45,7 @@ public class BlogCategoryController {
 		curr = curr==null?1:curr;
 		ModelAndView mv = new ModelAndView("/boss/articleCategory/list");
 		PageHelper.startPage(curr, 30);
-		List<BlogCategory> list = blogCategoryService.findAll();
+		List<BlogCategory> list = blogCategoryService.list();
 		//用PageInfo对结果进行包装
 		PageInfo<BlogCategory> page = new PageInfo<BlogCategory>(list);
 		mv.addObject("list", list);
@@ -61,7 +61,7 @@ public class BlogCategoryController {
 	public ModelAndView edit(@PathVariable("id") Integer id){
 		ModelAndView mv = new ModelAndView("/boss/articleCategory/edit");
 		try {
-			BlogCategory tag = blogCategoryService.findById(id);
+			BlogCategory tag = blogCategoryService.getById(id);
 			mv.addObject("articleCategory",tag);
 		} catch (Exception e) {
 			LOG.error("exception-->"+e);
@@ -74,7 +74,7 @@ public class BlogCategoryController {
 	public String doEdit(HttpServletRequest req,final RedirectAttributes redirectAttributes){
 		String id = req.getParameter("cid");
 		String cname = req.getParameter("cname");
-		BlogCategory category = blogCategoryService.findById(Integer.parseInt(id));
+		BlogCategory category = blogCategoryService.getById(Integer.parseInt(id));
 		if(!category.getCname().equals(cname)){
 			category.setCname(cname);
 			blogCategoryService.update(category);
@@ -94,7 +94,7 @@ public class BlogCategoryController {
 	@RequestMapping("/doAdd")
 	public String doAdd(String cname,final RedirectAttributes redirectAttributes){
 		//判断是否存在
-		BlogCategory t = blogCategoryService.findByName(cname);
+		BlogCategory t = blogCategoryService.getByName(cname);
 		if(null!=t){
 			redirectAttributes.addFlashAttribute("msg", "添加失败【已存在】");
 			return "redirect:/boss/articleCategory/list"; 

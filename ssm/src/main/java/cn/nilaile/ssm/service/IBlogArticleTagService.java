@@ -8,9 +8,9 @@ import cn.nilaile.ssm.entity.BlogCategory;
 import cn.nilaile.ssm.entity.BlogTag;
 
 public interface IBlogArticleTagService {
-	 List<BlogArticleTag> findByArticle(String aid);
+	List<BlogArticleTag> getByAid(String aid);
 
-	String findArticleTagIds(String id);
+	String getByArticleTagIds(String id);
 
 
 }

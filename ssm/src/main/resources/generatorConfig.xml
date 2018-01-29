@@ -42,7 +42,7 @@
 	</sqlMapGenerator>  
 	   
 	<!-- 生成的Dao接口 的包路径 -->  
-	<javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${target.project}">  
+	<javaClientGenerator type="XMLMAPPER"  targetPackage="${dao.package}" targetProject="${target.project}">  
 	<property name="enableSubPackages" value="ture"/>  
 	</javaClientGenerator>  
 	   

@@ -5,15 +5,15 @@ import java.util.List;
 import cn.nilaile.ssm.entity.BlogCategory;
 
 public interface IBlogCategoryService {
-	public List<BlogCategory> findAll();
+	public List<BlogCategory> list();
 
-	public void delete(String ids);
+	public void remove(String ids);
 
-	public BlogCategory findById(Integer id);
+	public BlogCategory getById(Integer id);
 
 	public void update(BlogCategory category);
 
-	public BlogCategory findByName(String cname);
+	public BlogCategory getByName(String cname);
 
 	public void save(BlogCategory t);
 

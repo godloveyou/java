@@ -22,7 +22,7 @@
 </span>
 </blockquote>
 
-	<form class="layui-form" action="<%=request.getContextPath()%>/boss/articleTag/doAdd"  method="post">
+	<form class="layui-form" action="<%=request.getContextPath()%>/boss/articleCategory/doAdd"  method="post">
 		<div class="layui-form-item">
 			<label class="layui-form-label">分类名称</label>
 			<div class="layui-input-block">

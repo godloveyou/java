@@ -49,7 +49,7 @@ public class BlogArticleController {
 	
 	@RequestMapping(value="/delete/{aids}") 
 	public String delete(@PathVariable("aids") String aids, final RedirectAttributes redirectAttributes){
-		articleService.delete(aids);
+		articleService.remove(aids);
 		redirectAttributes.addFlashAttribute("msg", "删除成功");
 		return "redirect:/boss/article/list";
 	}
@@ -70,7 +70,7 @@ public class BlogArticleController {
 			a.setTitle(title);
 		}
 		PageHelper.startPage(curr, 20);
-		List<BlogArticle> list = articleService.findByPage(a);
+		List<BlogArticle> list = articleService.list(a);
 		//用PageInfo对结果进行包装
 		PageInfo<BlogArticle> page = new PageInfo<BlogArticle>(list);
 	
@@ -86,8 +86,8 @@ public class BlogArticleController {
 
 	
 	public ModelAndView loadCommonData(ModelAndView mv){
-		List<BlogCategory> listCategory = categoryService.findAll();
-		List<BlogTag> listTag = blogTagService.findAll();
+		List<BlogCategory> listCategory = categoryService.list();
+		List<BlogTag> listTag = blogTagService.list();
 		mv.addObject("listCategory", listCategory);
 		mv.addObject("listTag", listTag);
 		return mv;
@@ -97,9 +97,9 @@ public class BlogArticleController {
 	public ModelAndView edit(@PathVariable("id") String id){
 		ModelAndView mv = new ModelAndView("/boss/article/articleEdit");
 		try {
-			BlogArticle article = this.articleService.findById(id);
+			BlogArticle article = this.articleService.getById(id);
 			mv.addObject("article",article);
-			String articleTagIds = IBlogArticleTagService.findArticleTagIds(article.getId());
+			String articleTagIds = IBlogArticleTagService.getByArticleTagIds(article.getId());
 			mv.addObject("articleTagIds", articleTagIds);
 		    loadCommonData(mv);
 		} catch (Exception e) {

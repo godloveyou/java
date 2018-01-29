@@ -47,7 +47,7 @@ public class ArticleDaoTest {
 			b.setIsRecommend("1");
 			b.setPublishDate(new java.util.Date());
 			b.setUserId("b63f7040da4311e79c0d7824afc13d01");
-			int a = blogArticleDao.insert(b);
+			int a = blogArticleDao.save(b);
 			LOG.info("success: "+a);
 			
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class ArticleDaoTest {
 	@Test
 	public void testFindByPage(){
 		//PageHelper.startPage(1, 1);
-		List<BlogArticle> list = blogArticleDao.findByPage(null);
+		List<BlogArticle> list = blogArticleDao.list(null);
 		for(int i=0;i<list.size();i++){
 			BlogArticle b = list.get(i);
 			LOG.info("COMMENTS: "+b.getListBlogComment().size());
@@ -70,7 +70,7 @@ public class ArticleDaoTest {
 	@Test
 	@Ignore
 	public void testFindByArticle(){
-		BlogArticle a = blogArticleDao.selectByPrimaryKey("1");
+		BlogArticle a = blogArticleDao.getById("1");
 		LOG.info("success: "+a.getContentHtml());
 	}
 	

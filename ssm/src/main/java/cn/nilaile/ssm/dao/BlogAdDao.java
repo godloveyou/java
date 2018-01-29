@@ -3,13 +3,13 @@ package cn.nilaile.ssm.dao;
 import cn.nilaile.ssm.entity.BlogAd;
 
 public interface BlogAdDao {
-    int deleteByPrimaryKey(Integer id);
+    int removeByPrimaryKey(Integer id);
 
-    int insert(BlogAd record);
+    int save(BlogAd record);
 
-    int insertSelective(BlogAd record);
+    int saveSelective(BlogAd record);
 
-    BlogAd selectByPrimaryKey(Integer id);
+    BlogAd getById(Integer id);
 
     int updateByPrimaryKeySelective(BlogAd record);
 

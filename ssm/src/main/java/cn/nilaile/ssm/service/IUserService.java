@@ -4,9 +4,9 @@ import cn.nilaile.ssm.entity.User;
 
 public interface IUserService {
 
-	public User login(String username);
-	public User findByUserName(String username);
-	public User findByMobile(String mobile);
+	public User getByUserNameOrMobile(String username);
+	public User getByUserName(String username);
+	public User getByMobile(String mobile);
 	
 	public void updateByProper(User u);
 	
