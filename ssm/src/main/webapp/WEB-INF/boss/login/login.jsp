@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/admin/css/login.css" media="all" />
 </head>
-<body>
+<body >
 	<video class="video-player" preload="auto" autoplay="autoplay" loop="loop" data-height="1080" data-width="1920" height="1080" width="1920">
 	    <source src="login.mp4" type="<%=request.getContextPath()%>/boss/login/login.mp4">
 	</video>

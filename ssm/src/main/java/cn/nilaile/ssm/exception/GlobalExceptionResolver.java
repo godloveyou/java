@@ -24,6 +24,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 	@ResponseBody
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+		ex.printStackTrace();
 		LOG.error("访问" + request.getRequestURI() + " 发生错误, 错误信息:" + ex.getMessage());
 		//这里有2种选择
 		//跳转到定制化的错误页面

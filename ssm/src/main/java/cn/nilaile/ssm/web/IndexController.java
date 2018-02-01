@@ -80,11 +80,13 @@ public class IndexController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/category/{cname}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@RequestMapping(value="/categories/{cname}",method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	public ModelAndView findByCategory(@PathVariable("cname") String cname){
 		BlogCategory c = null;
 		try {
-			c = categorService.getByName(new String(cname.getBytes("ISO-8859-1"), "utf8"));
+			String name = new String(cname.getBytes("ISO-8859-1"), "utf8");
+			c = categorService.getByName(name);
+			System.out.println("name==="+name);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

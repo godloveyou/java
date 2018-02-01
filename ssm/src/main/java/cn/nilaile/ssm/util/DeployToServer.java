@@ -34,10 +34,61 @@ public class DeployToServer {
 	private final static Logger log = LoggerFactory.getLogger(DeployToServer.class);
 	
 	public static void main(String[] args) {
-		boolean uploadRes = uploadToServer();
-		
+		//boolean uploadRes = uploadToServer();
+		startServer();
 	}
 
+	/**
+	 * 停止服务器,
+	 * 删除旧项目
+	 */
+	public static void stopServer(){
+		   Connection conn = new Connection(dataServerIp,port);  
+		    log.info("开始启动服务器");  
+		    try {  
+		        conn.connect();  
+		        boolean isAuthenticated = conn.authenticateWithPassword(dataServerUsername, dataServerPassword);  
+		        
+		        if (isAuthenticated == false) {
+		        	   throw new IOException("Authentication failed.文件scp到数据服务器时发生异常");  
+		        }
+		        
+		    	Session sess = conn.openSession();
+				sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/shutdown.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
+				sess.close();
+		        conn.close();  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		        log.error("启动服务器异常",e);  
+		    }  
+		    log.info("服务器启动完成");  
+	}
+	
+	
+	/**
+	 * 启动服务器
+	 */
+	public static void startServer(){
+		   Connection conn = new Connection(dataServerIp,port);  
+		    log.info("开始启动服务器");  
+		    try {  
+		        conn.connect();  
+		        boolean isAuthenticated = conn.authenticateWithPassword(dataServerUsername, dataServerPassword);  
+		        
+		        if (isAuthenticated == false) {
+		        	   throw new IOException("Authentication failed.文件scp到数据服务器时发生异常");  
+		        }
+		        
+		    	Session sess = conn.openSession();
+				sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/startup.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
+				sess.close();
+		        conn.close();  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		        log.error("启动服务器异常",e);  
+		    }  
+		    log.info("服务器启动完成");  
+	}
 
 	/**
 	 * 本地文件上传到远程服务器
@@ -56,13 +107,13 @@ public class DeployToServer {
 	        }
 	         
 	        
-	        SCPClient client = new SCPClient(conn);  
-	        client.put("F:/david/git/ssm/ssm/target/blogforjava.war", dataServerDestDir); //本地文件scp到远程目录  
+//	        SCPClient client = new SCPClient(conn);  
+//	        client.put("F:/david/git/ssm/ssm/target/blogforjava.war", dataServerDestDir); //本地文件scp到远程目录  
 	       // client.get(dataServerDestDir + "00审计.zip", localDir);//远程的文件scp到本地目录  
 	        
-//	    	Session sess = conn.openSession();
-//			sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/shutdown.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
-//			sess.close();
+	    	Session sess = conn.openSession();
+			sess.execCommand("/usr/local/apache-tomcat-7.0.67/bin/shutdown.sh"+";"+"rm -rf /usr/local/apache-tomcat-7.0.67/webapps/blogforjava");
+			sess.close();
 			
 	        conn.close();  
 	    } catch (IOException e) {  

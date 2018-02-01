@@ -10,7 +10,7 @@
     		<ul class="navul">
     		 <li class="navlist current"><a href="<%=contextPath %>/index" class="">最新文章</a></li>
     		 	<c:forEach var="category"  items="${listCategory}">
-    		 			 <li class="navlist"><a href="<%=contextPath %>/category/${category.cname}" class=""> ${category.cname} </a></li>
+    		 			 <li class="navlist"><a href="<%=contextPath %>/categories/${category.cname}" class=""> ${category.cname} </a></li>
     		 	</c:forEach>
     		</ul>
     	</div>
