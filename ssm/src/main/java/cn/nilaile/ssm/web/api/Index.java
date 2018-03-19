@@ -10,9 +10,5 @@ import cn.nilaile.ssm.dto.BaseResult;
 @RequestMapping("/api")
 public class Index {
 	
-	@RequestMapping("/index") 
-	@ResponseBody
-	public BaseResult<String> index(){
-		return new BaseResult<>(true, "Api调用成功");
-	}
+
 }

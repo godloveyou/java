@@ -1,8 +1,11 @@
 package cn.nilaile.ssm.web.admin;
 
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,15 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.code.kaptcha.Constants;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
-import cn.nilaile.ssm.anno.Token;
 import cn.nilaile.ssm.dto.BaseResult;
 import cn.nilaile.ssm.entity.User;
 import cn.nilaile.ssm.enums.ResultEnum;
-import cn.nilaile.ssm.interceptor.BossLoginInterceptor;
 import cn.nilaile.ssm.service.IUserService;
 import cn.nilaile.ssm.util.Md5SaltUtil;
+import cn.nilaile.ssm.util.jiyan.GeetestConfig;
+import cn.nilaile.ssm.util.jiyan.GeetestLib;
 
 @Controller
 @RequestMapping("/boss")
@@ -52,14 +56,53 @@ public class LoginController {
 
 	@RequestMapping(path = "/doLogin", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public BaseResult<Object> login(@RequestParam(value = "username") String username,
-			@RequestParam(value = "password") String password,@RequestParam(value="vcode") String vcode, HttpSession session) {
-		if(StringUtils.isBlank(vcode)){
-			return new BaseResult<Object>(false, "验证码不能为空");
+	public BaseResult<Object> login(HttpServletRequest request,@RequestParam(value = "username") String username,
+			@RequestParam(value = "password") String password, HttpSession session) {
+		
+		GeetestLib gtSdk = new GeetestLib(GeetestConfig.getGeetest_id(), GeetestConfig.getGeetest_key(), 
+				GeetestConfig.isnewfailback());
+			
+		String challenge = request.getParameter(GeetestLib.fn_geetest_challenge);
+		String validate = request.getParameter(GeetestLib.fn_geetest_validate);
+		String seccode = request.getParameter(GeetestLib.fn_geetest_seccode);
+		System.out.println(challenge+"--"+validate+""+seccode);
+		
+//		if(StringUtils.isBlank(vcode)){
+//			return new BaseResult<Object>(false, "验证码不能为空");
+//		}
+//		if(!vcode.equalsIgnoreCase(session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())){
+//			return new BaseResult<Object>(false, "验证码错误");
+//		}
+		
+		//从session中获取gt-server状态
+		int gt_server_status_code = (Integer) request.getSession().getAttribute(gtSdk.gtServerStatusSessionKey);
+		
+		//从session中获取userid
+		String userid = (String)request.getSession().getAttribute("userid");
+		
+		//自定义参数,可选择添加
+		HashMap<String, String> param = new HashMap<String, String>(); 
+		param.put("user_id", userid); //网站用户id
+		param.put("client_type", "web"); //web:电脑上的浏览器；h5:手机上的浏览器，包括移动应用内完全内置的web_view；native：通过原生SDK植入APP应用的方式
+		param.put("ip_address", "127.0.0.1"); //传输用户请求验证时所携带的IP
+		
+		int gtResult = 0;
+
+		if (gt_server_status_code == 1) {
+			//gt-server正常，向gt-server进行二次验证
+			gtResult = gtSdk.enhencedValidateRequest(challenge, validate, seccode, param);
+			log.info("gt_server_status_code===1 验证"+gtResult);
+		} else {
+			// gt-server非正常情况下，进行failback模式验证
+			log.info("failback:use your own server captcha validate");
+			gtResult = gtSdk.failbackValidateRequest(challenge, validate, seccode);
+			log.info("fail back 验证"+gtResult);
 		}
-		if(!vcode.equalsIgnoreCase(session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString())){
-			return new BaseResult<Object>(false, "验证码错误");
+
+		if (gtResult != 1) {
+			return new BaseResult<Object>(false, "验证码验证失败");
 		}
+		
 		
 		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
 			return new BaseResult<Object>(false, "用户名或密码为空");

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/boss")
 public class AdminIndexController {
 	
-	@RequestMapping("/index") 
+	@RequestMapping({"/index",""}) 
 	public String index(){
 		return "boss/index";
 	}

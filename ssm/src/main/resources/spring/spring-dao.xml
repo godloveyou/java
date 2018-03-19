@@ -26,6 +26,9 @@
 	    <property name="minIdle" value="${druid.pool.size.min}" />   
 	    <property name="maxActive" value="${druid.pool.size.max}" />  
 	    
+	    <!--removeAbandoned: 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="true"/>
+	    
 	     <!-- 配置获取连接等待超时的时间 -->
         <property name="maxWait" value="60000"/>
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
